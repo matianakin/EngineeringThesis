@@ -10,8 +10,14 @@ import javax.swing.table.*;
 import javax.swing.text.NumberFormatter;
 
 
+/**
+ * The type View.
+ */
 public class View extends JFrame {
 
+    /**
+     * Instantiates a new View.
+     */
     public View()
     {
         initComponents();
@@ -19,6 +25,9 @@ public class View extends JFrame {
 
     private JFrame frame;
 
+    /**
+     * Starting window.
+     */
     public void startingWindow()
     {
         frame = new JFrame("EngThes");

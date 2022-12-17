@@ -3,6 +3,9 @@ import project.model.*;
 import project.view.*;
 
 
+/**
+ * The type Controller.
+ */
 public class Controller {
 
     private Model model;
@@ -10,6 +13,9 @@ public class Controller {
     private View view;
 
 
+    /**
+     * Instantiates a new Controller.
+     */
     Controller() {
         this.model = new Model();
         this.view = new View();
@@ -17,9 +23,12 @@ public class Controller {
         this.controller();
     }
 
+    /**
+     * Controller.
+     */
     private void controller()
     {
-
+        model.GetXHTML("https://www.reddit.com");
     }
 
 }
