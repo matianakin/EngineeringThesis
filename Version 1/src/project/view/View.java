@@ -1,12 +1,11 @@
 package project.view;
 import java.awt.*;
-import java.awt.event.*;
-import java.io.*;
+import java.awt.event.ActionEvent;
+import java.io.File;
 import java.text.NumberFormat;
 import javax.swing.*;
 import javax.swing.border.*;
-import javax.swing.filechooser.FileSystemView;
-import javax.swing.table.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.NumberFormatter;
 
 
@@ -18,55 +17,52 @@ public class View extends JFrame {
     /**
      * Instantiates a new View.
      */
-    public View()
-    {
+    public View() {
         initComponents();
     }
 
+    /**
+     * The Frame.
+     */
     private JFrame frame;
 
     /**
      * Starting window.
      */
-    public void startingWindow()
-    {
+    public void startingWindow() {
         frame = new JFrame("EngThes");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(dialogPane);
-        frame.setJMenuBar(menuBar);
         frame.pack();
         frame.setVisible(true);
     }
 
 
     /**
-     *
      * Function preparing all elements of the window
      */
     private void initComponents() {
         dialogPane = new JPanel();
         contentPanel = new JPanel();
-        labelData = new JLabel();
-        textFieldData = new JTextField();
-        textFieldData.setText("Example of a text");
+        textFieldURL = new JTextField();
+        fileChooser = new JFileChooser();
+        textFieldURL.setText("Enter URL here");
         NumberFormat format = NumberFormat.getInstance();
         NumberFormatter formatter = new NumberFormatter(format);
         formatter.setValueClass(Integer.class);
         formatter.setMinimum(Integer.MIN_VALUE);
         formatter.setMaximum(Integer.MAX_VALUE);
-        formatter.setAllowsInvalid(false);
-        textFieldSeed = new JFormattedTextField(formatter);
-        emptyLabelSW = new JLabel();
+        formatter.setAllowsInvalid(false);/*
+        emptyLabelSW = new JLabel();*/
         textResult = new JTextArea();
         textResult.setLineWrap(true);
         textResult.setWrapStyleWord(true);
         textResult.setEnabled(false);
-        textResult.setDisabledTextColor(Color.black);
-        emptyLabelSE = new JLabel();
-        button1 = new JButton();
-        scrollPane2 = new JScrollPane(textResult);
-        menuBar = new JMenuBar();
-
+        textResult.setDisabledTextColor(Color.black);/*
+        emptyLabelSE = new JLabel();*/
+        buttonProceed = new JButton();
+        buttonFile = new JButton();
+        scrollPane = new JScrollPane(textResult);
         setMinimumSize(new Dimension(640, 360));
         var contentPane = getContentPane();
         contentPane.setLayout(new BorderLayout());
@@ -81,34 +77,87 @@ public class View extends JFrame {
             {
                 contentPanel.setLayout(new GridLayout(2, 3));
 
-                textFieldData.setHorizontalAlignment(SwingConstants.CENTER);
-                contentPanel.add(textFieldData);
+                contentPanel.add(textFieldURL);
 
-                textFieldSeed.setHorizontalAlignment(SwingConstants.CENTER);
-                textFieldSeed.setToolTipText("Seed");
-                contentPanel.add(textFieldSeed);
-                contentPanel.add(emptyLabelSW);
-                button1.setText("Proceed");
-                contentPanel.add(emptyLabelSE);
+                /*contentPanel.add(emptyLabelSW);*/
+                buttonFile.addActionListener(this::buttonFileActionPerformed);
+                buttonProceed.addActionListener(this::buttonProceedActionPerformed);
+                buttonProceed.setText("Proceed");
+                buttonFile.setText("Choose a file");
+                /*contentPanel.add(emptyLabelSE);*/
+                contentPanel.add(buttonFile);
+                contentPanel.add(buttonProceed);
             }
-            labelData.setText("Put your data here");
-            labelData.setHorizontalAlignment(SwingConstants.CENTER);
-            dialogPane.add(labelData, BorderLayout.NORTH);
-            labelData.setMinimumSize(new Dimension(640, 90));
-            labelData.setPreferredSize(new Dimension(640, 90));
-            labelData.setMaximumSize(new Dimension(640, 90));
+
             dialogPane.add(contentPanel, BorderLayout.CENTER);
             textResult.setText("Result");
-            dialogPane.add(scrollPane2, BorderLayout.SOUTH);
-            scrollPane2.setMinimumSize(new Dimension(640, 90));
-            scrollPane2.setPreferredSize(new Dimension(640, 90));
-            scrollPane2.setMaximumSize(new Dimension(640, 90));
+            dialogPane.add(scrollPane, BorderLayout.SOUTH);
+            scrollPane.setMinimumSize(new Dimension(640, 90));
+            scrollPane.setPreferredSize(new Dimension(640, 90));
+            scrollPane.setMaximumSize(new Dimension(640, 90));
         }
         contentPane.add(dialogPane, BorderLayout.CENTER);
         pack();
         setLocationRelativeTo(getOwner());
 
 
+    }
+
+
+    /**
+     * Button proceed action performed.
+     *
+     * @param e the e
+     */
+    private void buttonProceedActionPerformed(ActionEvent e) {
+
+        if (filePath == null || filePath.isEmpty()) {
+            JOptionPane.showMessageDialog(frame,
+                    "Please provide a text file with the desired requirements",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        } else if (textFieldURL.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(frame,
+                    "Please provide a URL to the chosen web app",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        } else {
+            synchronized (buttonProceed) {
+                buttonProceed.notify();
+            }
+        }
+    }
+
+    /**
+     * Button file action performed.
+     *
+     * @param e the e
+     */
+    private void buttonFileActionPerformed(ActionEvent e) {
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Text files", "txt"));
+        fileSelectorResult = fileChooser.showOpenDialog(null);
+        if (fileSelectorResult == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            setFilePath(selectedFile.getAbsolutePath());
+        } else {
+            JOptionPane.showMessageDialog(frame,
+                    "Please provide a text file with the desired requirements",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    /**
+     * Button proceed clicked.
+     */
+    public void buttonProceedClicked() {
+        synchronized (buttonProceed) {
+            try {
+                buttonProceed.wait();
+            } catch (InterruptedException ignored) {
+
+            }
+        }
     }
 
 
@@ -124,46 +173,106 @@ public class View extends JFrame {
 
 
     /**
-     * A text label on the top of the window
+     * The Text field url.
      */
-    private JLabel labelData;
+    private JTextField textFieldURL;
 
-
-    private JTextField textFieldData;
-
-
-    /**
-     * The text field taking the seed
-     */
-    private JFormattedTextField textFieldSeed;
-
-
-    /**
-     * Empty label to center other elements correctly
-     */
-    private JLabel emptyLabelSW;
 
     /**
      * A text window showing results of the operations
      */
     private JTextArea textResult;
 
-    /**
-     * Empty label to center other elements correctly
-     */
-    private JLabel emptyLabelSE;
 
     /**
-     * The only button in the window. Launching the program
+     * The Button proceed.
      */
-    private JButton button1;
-
-    private JScrollPane scrollPane2;
+    private JButton buttonProceed;
 
     /**
-     * The menu bar used in the window
+     * The Button file.
      */
-    private JMenuBar menuBar;
+    private JButton buttonFile;
+
+    /**
+     * The Scroll pane.
+     */
+    private JScrollPane scrollPane;
+
+    /**
+     * The File chooser.
+     */
+    private JFileChooser fileChooser;
+
+    /**
+     * The File selector result.
+     */
+    private int fileSelectorResult;
+
+    /**
+     * The File path.
+     */
+    private String filePath;
 
 
+    /**
+     * Sets file path.
+     *
+     * @param filePath the file path
+     */
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
+    }
+
+    /**
+     * Gets file path.
+     *
+     * @return the file path
+     */
+    public String getFilePath() {
+        return filePath;
+    }
+
+    /**
+     * Sets result text
+     *
+     * @param text the text
+     */
+    public void setText(String text)
+    {
+        String newText = textResult.getText() + text;
+        textResult.setText(newText);
+
+    }
+
+    /**
+     * Gets text to perform an operation on
+     *
+     * @return the text
+     */
+    public String getURL()
+    {
+        return textFieldURL.getText();
+    }
+
+    /**
+     * Cleans result text
+     */
+    public void cleanText()
+    {
+        textResult.setText("");
+    }
+
+    /**
+     * Prints error message in a popup window
+     *
+     * @param e the exception
+     */
+    public void printErrorMsg(Exception e)
+    {
+        JOptionPane.showMessageDialog(null,
+                e.getMessage(),
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+    }
 }
