@@ -13,6 +13,12 @@ public class Model {
 
     private Map<String, String> dictionary = new HashMap<>();
 
+    private String URL;
+
+    private String txtPath;
+
+    private String[] reqs;
+
     private String readFromInputStream(InputStream inputStream)
             throws IOException {
         StringBuilder resultStringBuilder = new StringBuilder();
@@ -145,14 +151,14 @@ public class Model {
         return dictionary;
     }
 
-    /**
-     * Sets dictionary.
-     *
-     * @param dictionary the dictionary
-     */
+    /*
+      Sets dictionary.
+
+      @param dictionary the dictionary
+     *//*
     public void setDictionary(Map<String, String> dictionary) {
         this.dictionary = dictionary;
-    }
+    }*/
 
     /**
      * Remove s.
@@ -175,4 +181,27 @@ public class Model {
         }
     }
 
+    public String getURL() {
+        return URL;
+    }
+
+    public void setURL(String URL) {
+        this.URL = URL;
+    }
+
+    public String getTxtPath() {
+        return txtPath;
+    }
+
+    public void setTxtPath(String txtPath) {
+        this.txtPath = txtPath;
+    }
+
+    public String[] getReqs() {
+        return reqs;
+    }
+
+    public void setReqs(String[] reqs) {
+        this.reqs = reqs;
+    }
 }

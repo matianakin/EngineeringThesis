@@ -64,4 +64,4 @@ table header - th
 table heading - thead
 table row - tr
 unordered list - ul
-variable var
+variable - var

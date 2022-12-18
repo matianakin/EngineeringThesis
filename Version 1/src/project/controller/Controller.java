@@ -30,8 +30,14 @@ public class Controller {
      */
     private void controller()
     {
-        //model.GetXHTML("https://www.wp.pl");
-        //model.readDictionary();
+        model.readDictionary();
+        view.buttonProceedClicked();
+        view.cleanText();
+        model.setURL(view.getURL());
+        model.setTxtPath(view.getFilePath());
+        model.setReqs(model.readFromFile(model.getTxtPath()));
+        model.removeS(model.getReqs());
+
 
     }
 
