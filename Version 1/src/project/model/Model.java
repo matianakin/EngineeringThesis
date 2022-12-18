@@ -1,5 +1,4 @@
 package project.model;
-
 import java.io.*;
 import java.net.URL;
 import java.util.HashMap;
@@ -126,7 +125,7 @@ public class Model {
             String line;
             // Read each line of the file
             while ((line = reader.readLine()) != null) {
-                String[] parts = line.split("-");
+                String[] parts = line.split(" - ");
                 String key = parts[0];
                 String value = parts[1];
                 dictionary.put(key, value);
