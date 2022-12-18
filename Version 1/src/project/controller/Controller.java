@@ -2,6 +2,8 @@ package project.controller;
 import project.model.*;
 import project.view.*;
 
+import java.util.Arrays;
+
 
 /**
  * The type Controller.
@@ -28,7 +30,9 @@ public class Controller {
      */
     private void controller()
     {
-        model.GetXHTML("https://www.reddit.com");
+        //model.GetXHTML("https://www.wp.pl");
+        //model.readDictionary();
+
     }
 
 }

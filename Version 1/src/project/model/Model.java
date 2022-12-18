@@ -12,6 +12,8 @@ import java.util.regex.Pattern;
  */
 public class Model {
 
+    private Map<String, String> dictionary = new HashMap<>();
+
     private String readFromInputStream(InputStream inputStream)
             throws IOException {
         StringBuilder resultStringBuilder = new StringBuilder();
@@ -112,6 +114,65 @@ public class Model {
         } catch (Exception e) {
             // Print an error message if the URL is invalid or there is a problem reading the XHTML
             System.out.println("Error: Invalid URL or problem reading XHTML");
+        }
+    }
+
+    /**
+     * Read dictionary.
+     */
+    public void readDictionary()
+    {
+        try (BufferedReader reader = new BufferedReader(new FileReader("dictionary.txt"))) {
+            String line;
+            // Read each line of the file
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split("-");
+                String key = parts[0];
+                String value = parts[1];
+                dictionary.put(key, value);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        //System.out.println(dictionary);
+    }
+
+    /**
+     * Gets dictionary.
+     *
+     * @return the dictionary
+     */
+    public Map<String, String> getDictionary() {
+        return dictionary;
+    }
+
+    /**
+     * Sets dictionary.
+     *
+     * @param dictionary the dictionary
+     */
+    public void setDictionary(Map<String, String> dictionary) {
+        this.dictionary = dictionary;
+    }
+
+    /**
+     * Remove s.
+     *
+     * @param list the list
+     */
+    public void removeS(String[] list)
+    {
+        for(int i=0; i< list.length; i++)
+        {
+            for(int j=0; j<list[i].length() ; j++)
+            {
+                if(list[i].charAt(j)=='s'&&(j+1==list[i].length() ||list[i].charAt(j+1)==' '))
+                {
+                    StringBuilder newWord = new StringBuilder(list[i]);
+                    newWord.deleteCharAt(j);
+                    list[i]=newWord.toString();
+                }
+            }
         }
     }
 
