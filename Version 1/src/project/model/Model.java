@@ -1,7 +1,9 @@
 package project.model;
 import java.io.*;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -11,13 +13,17 @@ import java.util.regex.Pattern;
  */
 public class Model {
 
-    private Map<String, String> dictionary = new HashMap<>();
+    private final Map<String, String> dictionary = new HashMap<>();
 
     private String URL;
 
     private String txtPath;
 
     private String[] reqs;
+
+    private String XHTML;
+
+    private final List<String> errors = new ArrayList<>();
 
     private String readFromInputStream(InputStream inputStream)
             throws IOException {
@@ -94,30 +100,26 @@ public class Model {
             while ((line = reader.readLine()) != null) {
                 xhtml.append(line);
             }
-
+            XHTML = xhtml.toString();
             /*PrintWriter writer = new PrintWriter("xhtml.txt", "UTF-8");
             writer.println(xhtml);
             writer.close();*/
 
-            Pattern pattern = Pattern.compile("<\\s*([\\w:.-]+)");
+           /* Pattern pattern = Pattern.compile("<\\s*([\\w:.-]+)");
             Matcher matcher = pattern.matcher(xhtml);
 
-            // Create a HashMap to store the element names and their counts
             Map<String, Integer> elementCounts = new HashMap<>();
 
-            // Iterate through all the matches and update the element counts
             while (matcher.find()) {
                 String elementName = matcher.group(1);
                 int count = elementCounts.getOrDefault(elementName, 0);
                 elementCounts.put(elementName, count + 1);
             }
 
-            // Print the element counts
             for (Map.Entry<String, Integer> entry : elementCounts.entrySet()) {
                 System.out.println(entry.getKey() + ": " + entry.getValue());
-            }
+            }*/
         } catch (Exception e) {
-            // Print an error message if the URL is invalid or there is a problem reading the XHTML
             System.out.println("Error: Invalid URL or problem reading XHTML");
         }
     }
@@ -155,7 +157,6 @@ public class Model {
       Sets dictionary.
 
       @param dictionary the dictionary
-     *//*
     public void setDictionary(Map<String, String> dictionary) {
         this.dictionary = dictionary;
     }*/
@@ -191,6 +192,26 @@ public class Model {
                 }
             }
         }
+    }
+
+    public void counter(String search, int number)
+    {
+        String toSearch = "<"+search+">";
+        int index = XHTML.indexOf(toSearch);
+
+        int count = 0;
+
+        // Iterate over the string and count the number of occurrences of the modified word
+        while (index != -1) {
+            count++;
+            index = XHTML.indexOf(toSearch, index + toSearch.length());
+        }
+
+        if(count != number)
+        {
+            errors.add("Wrong number of occurrences of "+search+", supposed to be "+number+", is "+count+"\n");
+        }
+
     }
 
     public String getURL() {
