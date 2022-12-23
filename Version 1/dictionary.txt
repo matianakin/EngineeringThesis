@@ -30,7 +30,6 @@ input form - input
 insert form - insert
 user input - kbd
 line - l
-line of text - l
 list item - li
 item of a list - li
 meta information - meta

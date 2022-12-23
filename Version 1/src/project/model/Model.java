@@ -42,7 +42,7 @@ public class Model {
     public String[] readFromFile(String path) {
         String[] ret = null;
         try {
-            ret = readFromInputStream(new FileInputStream(path)).split("\r");
+            ret = readFromInputStream(new FileInputStream(path)).split("\n");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -160,22 +160,34 @@ public class Model {
         this.dictionary = dictionary;
     }*/
 
-    /**
-     * Remove s.
-     *
-     * @param list the list
-     */
-    public void removeS(String[] list)
+
+    public void removeS()
     {
-        for(int i=0; i< list.length; i++)
+        for(int i=0; i< reqs.length; i++)
         {
-            for(int j=0; j<list[i].length() ; j++)
+            for(int j=0; j<reqs[i].length() ; j++)
             {
-                if(list[i].charAt(j)=='s'&&(j+1==list[i].length() ||list[i].charAt(j+1)==' '))
+                if(reqs[i].charAt(j)=='s'&&(j+1==reqs[i].length() ||reqs[i].charAt(j+1)==' '))
                 {
-                    StringBuilder newWord = new StringBuilder(list[i]);
+                    StringBuilder newWord = new StringBuilder(reqs[i]);
                     newWord.deleteCharAt(j);
-                    list[i]=newWord.toString();
+                    reqs[i]=newWord.toString();
+                }
+            }
+        }
+    }
+
+
+    public void swapWords()
+    {
+        for (Map.Entry<String, String> set : dictionary.entrySet())
+        {
+            for (int i=0; i< reqs.length; i++) {
+                if (reqs[i].contains(set.getKey())) {
+                    int startIndex = reqs[i].indexOf(set.getKey());
+                    int endIndex = startIndex + set.getKey().length();
+                    String newString = reqs[i].substring(0, startIndex) + set.getValue() + reqs[i].substring(endIndex);
+                    reqs[i] = newString;
                 }
             }
         }
