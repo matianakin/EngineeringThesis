@@ -1,3 +1,2 @@
-5 buttons
-1 lines
-35 paragraphs
+9 anchors
+4 list items

@@ -4,6 +4,8 @@ import project.view.*;
 
 import java.util.Arrays;
 
+import static java.lang.System.exit;
+
 
 /**
  * The type Controller.
@@ -39,7 +41,9 @@ public class Controller {
         model.setReqs(model.readFromFile(model.getTxtPath()));
         model.removeS();
         model.swapWords();
-        System.out.println(Arrays.toString(model.getReqs()));
+        model.iterateReqs();
+        view.setText(model.getErrors().toString());
+        //exit(0);
     }
 
 }

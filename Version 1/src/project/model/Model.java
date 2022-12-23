@@ -1,6 +1,7 @@
 package project.model;
 import java.io.*;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -101,11 +102,11 @@ public class Model {
                 xhtml.append(line);
             }
             XHTML = xhtml.toString();
-            /*PrintWriter writer = new PrintWriter("xhtml.txt", "UTF-8");
+            PrintWriter writer = new PrintWriter("xhtml.txt", StandardCharsets.UTF_8);
             writer.println(xhtml);
-            writer.close();*/
+            writer.close();
 
-           /* Pattern pattern = Pattern.compile("<\\s*([\\w:.-]+)");
+            Pattern pattern = Pattern.compile("<\\s*([\\w:.-]+)");
             Matcher matcher = pattern.matcher(xhtml);
 
             Map<String, Integer> elementCounts = new HashMap<>();
@@ -118,7 +119,7 @@ public class Model {
 
             for (Map.Entry<String, Integer> entry : elementCounts.entrySet()) {
                 System.out.println(entry.getKey() + ": " + entry.getValue());
-            }*/
+            }
         } catch (Exception e) {
             System.out.println("Error: Invalid URL or problem reading XHTML");
         }
@@ -196,15 +197,22 @@ public class Model {
 
     public void counter(String search, int number)
     {
-        String toSearch = "<"+search+">";
-        int index = XHTML.indexOf(toSearch);
+        String toSearch1 = "<"+search+" ";
+        String toSearch2 = "<"+search+">";
+        int index = XHTML.indexOf(toSearch1);
 
         int count = 0;
 
-        // Iterate over the string and count the number of occurrences of the modified word
         while (index != -1) {
             count++;
-            index = XHTML.indexOf(toSearch, index + toSearch.length());
+            index = XHTML.indexOf(toSearch1, index + toSearch1.length());
+        }
+
+        index = XHTML.indexOf(toSearch2);
+
+        while (index != -1) {
+            count++;
+            index = XHTML.indexOf(toSearch2, index + toSearch2.length());
         }
 
         if(count != number)
@@ -212,6 +220,26 @@ public class Model {
             errors.add("Wrong number of occurrences of "+search+", supposed to be "+number+", is "+count+"\n");
         }
 
+    }
+
+
+    public void iterateReqs()
+    {
+        for (String req : reqs) {
+            if (req.charAt(0) >= 48 && req.charAt(0) <= 57) {
+                int number = req.charAt(0) - 48;
+                int j = 1;
+                while (req.charAt(j) >= 48 && req.charAt(j) <= 57) {
+                    j++;
+                    number *= 10;
+                    number += req.charAt(j) - 48;
+                }
+
+                String toAnalyze = req.substring(j + 1);
+
+                counter(toAnalyze, number);
+            }
+        }
     }
 
     public String getURL() {
@@ -237,4 +265,18 @@ public class Model {
     public void setReqs(String[] reqs) {
         this.reqs = reqs;
     }
+
+    public String getXHTML() {
+        return XHTML;
+    }
+
+    public List<String> getErrors() {
+        return errors;
+    }
+
+    public void setXHTML(String XHTML) {
+        this.XHTML = XHTML;
+    }
+
+
 }
