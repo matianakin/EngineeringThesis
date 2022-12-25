@@ -1,5 +1,6 @@
 package project.model;
 import java.io.*;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -19,6 +20,8 @@ public class Model {
     private String URL;
 
     private String txtPath;
+
+    private String address;
 
     private String[] reqs;
 
@@ -84,12 +87,8 @@ public class Model {
         }
     }
 
-    /**
-     * Get xhtml.
-     *
-     * @param address the URL address of the site
-     */
-    public void GetXHTML (String address) {
+
+    public void GetXHTML () {
         try {
             // Create a URL object from the user-entered URL string
             URL url = new URL(address);
@@ -106,7 +105,7 @@ public class Model {
             writer.println(xhtml);
             writer.close();
 
-            Pattern pattern = Pattern.compile("<\\s*([\\w:.-]+)");
+            /*Pattern pattern = Pattern.compile("<\\s*([\\w:.-]+)");
             Matcher matcher = pattern.matcher(xhtml);
 
             Map<String, Integer> elementCounts = new HashMap<>();
@@ -119,7 +118,7 @@ public class Model {
 
             for (Map.Entry<String, Integer> entry : elementCounts.entrySet()) {
                 System.out.println(entry.getKey() + ": " + entry.getValue());
-            }
+            }*/
         } catch (Exception e) {
             System.out.println("Error: Invalid URL or problem reading XHTML");
         }
@@ -242,6 +241,73 @@ public class Model {
         }
     }
 
+    public void buttonSimulator()
+    {
+        try {
+
+            URL url = new URL(address);
+
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+            connection.setRequestMethod("POST");
+
+            connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+
+            String data = "button=btnDypl";
+
+            connection.setDoOutput(true);
+
+            DataOutputStream out = new DataOutputStream(connection.getOutputStream());
+            out.writeBytes(data);
+            out.flush();
+            out.close();
+
+            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            String inputLine;
+            StringBuilder response = new StringBuilder();
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            in.close();
+
+            //System.out.println(response.toString());
+
+            PrintWriter writer = new PrintWriter("xhtmlAfterButton.txt", StandardCharsets.UTF_8);
+            writer.println(response);
+            writer.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public  List<String> compare(String file1, String file2)  {
+        List<String> differences = new ArrayList<>();
+        try {
+            BufferedReader reader1 = new BufferedReader(new FileReader(file1));
+            BufferedReader reader2 = new BufferedReader(new FileReader(file2));
+
+            String line1 = reader1.readLine();
+            String line2 = reader2.readLine();
+
+            while (line1 != null || line2 != null) {
+                if (line1 == null || !line1.equals(line2)) {
+                    differences.add("< " + line1);
+                    differences.add("> " + line2);
+                }
+                line1 = reader1.readLine();
+                line2 = reader2.readLine();
+            }
+
+            reader1.close();
+            reader2.close();
+        } catch (IOException e) {
+       throw new RuntimeException(e);
+       }
+        return differences;
+    }
+
+
     public String getURL() {
         return URL;
     }
@@ -279,4 +345,7 @@ public class Model {
     }
 
 
+    public void setAddress(String address) {
+        this.address = address;
+    }
 }

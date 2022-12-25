@@ -36,12 +36,15 @@ public class Controller {
         view.buttonProceedClicked();
         view.cleanText();
         model.setURL(view.getURL());
-        model.GetXHTML(model.getURL());
+        model.setAddress(view.getURL());
+        model.GetXHTML();
         model.setTxtPath(view.getFilePath());
         model.setReqs(model.readFromFile(model.getTxtPath()));
         model.removeS();
         model.swapWords();
         model.iterateReqs();
+        model.buttonSimulator();
+        System.out.println(model.compare("xhtml.txt", "xhtmlAfterButton.txt"));
         view.setText(model.getErrors().toString());
         //exit(0);
     }
