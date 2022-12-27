@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 
 /**
  * The type Model.
@@ -90,7 +92,7 @@ public class Model {
 
     public void GetXHTML () {
         try {
-            // Create a URL object from the user-entered URL string
+            /*// Create a URL object from the user-entered URL string
             URL url = new URL(address);
 
             // Open a stream to the URL and read the XHTML into a StringBuilder
@@ -99,7 +101,19 @@ public class Model {
             String line;
             while ((line = reader.readLine()) != null) {
                 xhtml.append(line);
-            }
+            }*/
+            // Navigate to the URL of the webpage
+
+            // Set the path to the ChromeDriver executable
+            System.setProperty("webdriver.chrome.driver", "/path/to/chromedriver");
+
+            // Create an instance of the ChromeDriver
+            WebDriver driver = new ChromeDriver();
+
+            driver.get(address);
+
+            // Wait for the page to load
+            Thread.sleep(5000); // wait for 5 seconds
             XHTML = xhtml.toString();
             PrintWriter writer = new PrintWriter("xhtml.txt", StandardCharsets.UTF_8);
             writer.println(xhtml);

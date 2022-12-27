@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="selenium-java-4.7.2">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../selenium-java-4.7.2.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+    <jarDirectory url="jar://$PROJECT_DIR$/../selenium-java-4.7.2.zip!/" recursive="false" />
+  </library>
+</component>
