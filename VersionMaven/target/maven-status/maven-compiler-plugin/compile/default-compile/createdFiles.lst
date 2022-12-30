@@ -1,0 +1,4 @@
+project\view\View.class
+project\model\Model.class
+project\controller\Controller.class
+project\controller\Main.class

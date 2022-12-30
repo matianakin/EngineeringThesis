@@ -9,6 +9,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import com.gargoylesoftware.htmlunit.*;
+import com.gargoylesoftware.htmlunit.html.*;
+
 
 /**
  * The type Model.
@@ -100,29 +103,19 @@ public class Model {
             while ((line = reader.readLine()) != null) {
                 xhtml.append(line);
             }*/
-            // Navigate to the URL of the webpage
 
-            // Set the path to the ChromeDriver executable
-            //System.setProperty("webdriver.chrome.driver", "/path/to/chromedriver");
-
-            // Create an instance of the ChromeDriver
           /*  WebDriver driver = new ChromeDriver();
 
             driver.get(address);*/
 
             WebClient webClient = new WebClient();
 
-            // Turn off JavaScript support to allow for XHTML parsing
-            webClient.getOptions().setJavaScriptEnabled(true);
+            webClient.getOptions().setJavaScriptEnabled(false);
 
-            // Create a new HtmlPage object for the specified URL
             HtmlPage page = webClient.getPage(address);
 
-            // Get the XHTML content of the page
             html = page.asXml();
 
-            /*// Wait for the page to load
-            Thread.sleep(5000); // wait for 5 seconds*/
             XHTML = xhtml.toString();
             PrintWriter writer = new PrintWriter("xhtml.txt", StandardCharsets.UTF_8);
             writer.println(xhtml);
@@ -154,7 +147,6 @@ public class Model {
     {
         try (BufferedReader reader = new BufferedReader(new FileReader("dictionary.txt"))) {
             String line;
-            // Read each line of the file
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(" - ");
                 String key = parts[0];
@@ -325,8 +317,8 @@ public class Model {
             reader1.close();
             reader2.close();
         } catch (IOException e) {
-       throw new RuntimeException(e);
-       }
+            throw new RuntimeException(e);
+        }
         return differences;
     }
 
