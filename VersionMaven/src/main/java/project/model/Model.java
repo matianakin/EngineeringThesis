@@ -1,4 +1,8 @@
 package project.model;
+
+import com.gargoylesoftware.htmlunit.WebClient;
+import com.gargoylesoftware.htmlunit.html.HtmlPage;
+
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -7,10 +11,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import com.gargoylesoftware.htmlunit.*;
-import com.gargoylesoftware.htmlunit.html.*;
 
 
 /**
@@ -93,10 +93,10 @@ public class Model {
 
     public void GetXHTML () {
         try {
-            /*// Create a URL object from the user-entered URL string
+            /*
             URL url = new URL(address);
 
-            // Open a stream to the URL and read the XHTML into a StringBuilder
+
             BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
             StringBuilder xhtml = new StringBuilder();
             String line;
@@ -104,19 +104,16 @@ public class Model {
                 xhtml.append(line);
             }*/
 
-          /*  WebDriver driver = new ChromeDriver();
-
-            driver.get(address);*/
-
             WebClient webClient = new WebClient();
 
-            webClient.getOptions().setJavaScriptEnabled(false);
+            webClient.getOptions().setThrowExceptionOnScriptError(false);
+            webClient.getOptions().setJavaScriptEnabled(true);
 
             HtmlPage page = webClient.getPage(address);
+            webClient.waitForBackgroundJavaScript(1000000);
+            var xhtml = page.asXml();
 
-            html = page.asXml();
-
-            XHTML = xhtml.toString();
+            XHTML = xhtml;
             PrintWriter writer = new PrintWriter("xhtml.txt", StandardCharsets.UTF_8);
             writer.println(xhtml);
             writer.close();

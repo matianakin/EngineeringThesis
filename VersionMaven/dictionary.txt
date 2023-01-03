@@ -1,0 +1,66 @@
+anchor - a
+abbreviation - abbr
+accessibility mapping - access
+block of code - blockcode
+block of quote - blockquote
+content - body
+citation - cite
+fragment of code - code
+code fragment - code
+column - col
+group of columns - colgroup
+Definition Data - dd
+definition - dfn
+definition item - di
+block - div
+definition list - dl
+definition term - dt
+Emphasis - em
+event listener - ev:listener
+element group - group
+Structured heading - h
+metadata - head
+header - head
+root - html
+image - img
+picture - img
+painting - img
+graphic - img
+input form - input
+insert form - insert
+user input - kbd
+line - l
+list item - li
+item of a list - li
+meta information - meta
+navigation list - nl
+external object - object
+ordered list - ol
+paragraph - p
+parameter - param
+preformatted block - pre
+quotation - quote
+repeating group - repeat
+ruby annotation - ruby
+sample output - samp
+secret input - secret
+single select - select1
+multiple select - select
+break - separator
+set focus - setfocus
+index - setindex
+set value - setvalue
+strong text - strong
+bolded text - strong
+style rules - style
+subscript - sub
+superscript - sup
+selection form - switch
+table cell - td
+text area - textarea
+table footer - tfoot
+table header - th
+table heading - thead
+table row - tr
+unordered list - ul
+variable - var
