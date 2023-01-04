@@ -3,6 +3,10 @@ package project.controller;
 import project.model.Model;
 import project.view.View;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
+
 
 /**
  * The type Controller.
@@ -39,8 +43,8 @@ public class Controller {
         model.removeS();
         model.swapWords();
         model.iterateReqs();
-        //model.buttonSimulator();
-        /*System.out.println(model.compare("xhtml.txt", "xhtmlAfterButton.txt"));
+        model.buttonSimulator();
+        //System.out.println(model.compare("xhtml.txt", "xhtmlAfterButton.txt"));
         try {
             PrintWriter writer = new PrintWriter("compare.txt", StandardCharsets.UTF_8);
             writer.println(model.compare("xhtml.txt", "xhtmlAfterButton.txt"));
@@ -48,7 +52,7 @@ public class Controller {
         }
         catch (IOException e) {
             throw new RuntimeException(e);
-        }*/
+        }
         view.setText(model.getErrors().toString());
         //exit(0);
     }

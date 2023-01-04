@@ -1,12 +1,12 @@
 package project.model;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
 import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -112,7 +112,7 @@ public class Model {
 
             driver.get(address);
 
-            Thread.sleep(5000);
+            Thread.sleep(1000);
 
             /*WebClient webClient = new WebClient();
 
@@ -127,6 +127,7 @@ public class Model {
             PrintWriter writer = new PrintWriter("xhtml.txt", StandardCharsets.UTF_8);
             writer.println(XHTML);
             writer.close();
+            driver.quit();
             /*Pattern pattern = Pattern.compile("<\\s*([\\w:.-]+)");
             Matcher matcher = pattern.matcher(xhtml);
 
@@ -268,7 +269,7 @@ public class Model {
     {
         try {
 
-            URL url = new URL(address);
+            /*URL url = new URL(address);
 
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
@@ -292,13 +293,33 @@ public class Model {
                 response.append(inputLine);
                 response.append("\n");
             }
-            in.close();
+            in.close();*/
+
+            WebDriver driver = new ChromeDriver();
+
+            driver.get(address);
+
+            WebElement button = driver.findElement(By.id("btnDypl"));
+            button.click();
+
+            /*(new WebDriverWait(driver, Duration.ofMillis(500))).until(new ExpectedCondition<Boolean>() {
+                public Boolean apply(WebDriver d) {
+                    return d.getCurrentUrl().contains("some_string_that_appears_after_clicking_the_button");
+                }
+            });*/
+
+            Thread.sleep(1000);
+
+
+            // Get the page source
+            String response = driver.getPageSource();
 
             //System.out.println(response.toString());
 
             PrintWriter writer = new PrintWriter("xhtmlAfterButton.txt", StandardCharsets.UTF_8);
             writer.println(response);
             writer.close();
+            driver.quit();
         } catch (Exception e) {
             e.printStackTrace();
         }
