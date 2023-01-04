@@ -1,7 +1,8 @@
 package project.model;
 
-import com.gargoylesoftware.htmlunit.WebClient;
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -11,7 +12,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 
 /**
  * The type Model.
@@ -102,20 +102,31 @@ public class Model {
                 xhtml.append(line);
             }*/
 
-            WebClient webClient = new WebClient();
+            System.setProperty("webdriver.chrome.driver", "C:\\chromedriver_win32\\chromedriver.exe");
+
+            ChromeOptions options = new ChromeOptions();
+            options.setHeadless(true);
+
+
+            WebDriver driver = new ChromeDriver(options);
+
+            driver.get(address);
+
+            Thread.sleep(5000);
+
+            /*WebClient webClient = new WebClient();
 
             webClient.getOptions().setThrowExceptionOnScriptError(false);
             webClient.getOptions().setJavaScriptEnabled(true);
 
             HtmlPage page = webClient.getPage(address);
             webClient.waitForBackgroundJavaScript(1000000);
-            var xhtml = page.asXml();
+            var xhtml = page.asXml();*/
 
-            XHTML = xhtml;
+            XHTML = driver.getPageSource();
             PrintWriter writer = new PrintWriter("xhtml.txt", StandardCharsets.UTF_8);
-            writer.println(xhtml);
+            writer.println(XHTML);
             writer.close();
-
             /*Pattern pattern = Pattern.compile("<\\s*([\\w:.-]+)");
             Matcher matcher = pattern.matcher(xhtml);
 
@@ -130,8 +141,10 @@ public class Model {
             for (Map.Entry<String, Integer> entry : elementCounts.entrySet()) {
                 System.out.println(entry.getKey() + ": " + entry.getValue());
             }*/
-        } catch (Exception e) {
-            System.out.println("Error: Invalid URL or problem reading XHTML");
+        } catch (InterruptedException e) {
+            System.out.println("Error: Interrupted while waiting for page to load");
+        } catch (IOException e) {
+            System.out.println("Error: Problem writing to file");
         }
     }
 
