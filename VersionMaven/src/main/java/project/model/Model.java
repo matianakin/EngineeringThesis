@@ -20,8 +20,6 @@ public class Model {
 
     private final Map<String, String> dictionary = new HashMap<>();
 
-    private String URL;
-
     private String txtPath;
 
     private String address;
@@ -279,6 +277,7 @@ public class Model {
             StringBuilder response = new StringBuilder();
             while ((inputLine = in.readLine()) != null) {
                 response.append(inputLine);
+                response.append("\n");
             }
             in.close();
 
@@ -319,14 +318,6 @@ public class Model {
         return differences;
     }
 
-
-    public String getURL() {
-        return URL;
-    }
-
-    public void setURL(String URL) {
-        this.URL = URL;
-    }
 
     public String getTxtPath() {
         return txtPath;

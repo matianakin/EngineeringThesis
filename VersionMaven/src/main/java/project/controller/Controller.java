@@ -1,10 +1,7 @@
 package project.controller;
-import project.model.*;
-import project.view.*;
 
-import java.util.Arrays;
-
-import static java.lang.System.exit;
+import project.model.Model;
+import project.view.View;
 
 
 /**
@@ -35,7 +32,6 @@ public class Controller {
         model.readDictionary();
         view.buttonProceedClicked();
         view.cleanText();
-        model.setURL(view.getURL());
         model.setAddress(view.getURL());
         model.GetXHTML();
         model.setTxtPath(view.getFilePath());
@@ -43,8 +39,16 @@ public class Controller {
         model.removeS();
         model.swapWords();
         model.iterateReqs();
-        model.buttonSimulator();
-        System.out.println(model.compare("xhtml.txt", "xhtmlAfterButton.txt"));
+        //model.buttonSimulator();
+        /*System.out.println(model.compare("xhtml.txt", "xhtmlAfterButton.txt"));
+        try {
+            PrintWriter writer = new PrintWriter("compare.txt", StandardCharsets.UTF_8);
+            writer.println(model.compare("xhtml.txt", "xhtmlAfterButton.txt"));
+            writer.close();
+        }
+        catch (IOException e) {
+            throw new RuntimeException(e);
+        }*/
         view.setText(model.getErrors().toString());
         //exit(0);
     }
