@@ -8,10 +8,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * The type Model.
@@ -265,7 +262,7 @@ public class Model {
         }
     }
 
-    public void buttonSimulator()
+    public void buttonSimulator(String id)
     {
         try {
 
@@ -299,7 +296,7 @@ public class Model {
 
             driver.get(address);
 
-            WebElement button = driver.findElement(By.id("btnDypl"));
+            WebElement button = driver.findElement(By.id(id));
             button.click();
 
             /*(new WebDriverWait(driver, Duration.ofMillis(500))).until(new ExpectedCondition<Boolean>() {
@@ -325,33 +322,75 @@ public class Model {
         }
     }
 
-
-    public  List<String> compare(String file1, String file2)  {
-        List<String> differences = new ArrayList<>();
-        try {
-            BufferedReader reader1 = new BufferedReader(new FileReader(file1));
-            BufferedReader reader2 = new BufferedReader(new FileReader(file2));
-
-            String line1 = reader1.readLine();
-            String line2 = reader2.readLine();
-
-            while (line1 != null || line2 != null) {
-                if (line1 == null || !line1.equals(line2)) {
-                    differences.add("< " + line1);
-                    differences.add("> " + line2);
-                }
-                line1 = reader1.readLine();
-                line2 = reader2.readLine();
+    public static String[] readLinesFromFile(String filePath) {
+        ArrayList<String> lines = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line = null;
+            while ((line = reader.readLine()) != null) {
+                lines.add(line);
             }
+        } catch (IOException e) {
+            System.out.println("An error occurred while reading the file: " + e.getMessage());
+        }
+        return lines.toArray(new String[0]);
+    }
 
-            reader1.close();
-            reader2.close();
+    public  void compare(String[] text1, String[] text2)  {
+        int lengthDif = Math.abs(text1.length- text2.length);
+        ArrayList<String> diffs = new ArrayList<>();
+        int shortLength =0;
+        var longText = text1;
+        var shortText = text2;
+        if(text1.length> text2.length)
+        {
+            shortLength = text2.length;
+        }
+        else
+        {
+            shortLength = text1.length;
+            longText=text2;
+            shortText=text1;
+        }
+
+        BufferedWriter writer = null;
+
+        try {
+             writer = new BufferedWriter(new FileWriter("diff.txt"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return differences;
-    }
 
+        for(int i=0; i<shortLength; i++)
+        {
+            if(!longText[i].equalsIgnoreCase(shortText[i]))
+            {
+                //add what exactly to save
+                String line = text2[i];
+                try {
+                    writer.write(line);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                if(shortText[i+1]!=null&&longText[i+1]!=null&&longText[i+1+lengthDif]!=null&&longText[i+1+lengthDif].equalsIgnoreCase(shortText[i+1]))
+                {
+                    if(Arrays.equals(text2, longText))
+                    {
+                        for(int j=1; j<lengthDif; j++)
+                        {
+                            try {
+                                writer.write(text2[i+j]);
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                    }
+                    else {
+                        break;
+                    }
+                }
+            }
+        }
+    }
 
     public String getTxtPath() {
         return txtPath;
