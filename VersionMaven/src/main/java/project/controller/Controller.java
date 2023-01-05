@@ -3,6 +3,8 @@ package project.controller;
 import project.model.Model;
 import project.view.View;
 
+import static java.lang.System.exit;
+
 
 /**
  * The type Controller.
@@ -40,9 +42,11 @@ public class Controller {
         model.swapWords();
         model.iterateReqs();
         model.buttonSimulator("btnDypl");
-        //model.compare("xhtml.txt", "xhtmlAfterButton.txt");
+        model.compare(model.readLinesFromFile("xhtml.txt"), model.readLinesFromFile("xhtmlAfterButton.txt"));
         view.setText(model.getErrors().toString());
-        //exit(0);
+
+
+        exit(0);
     }
 
 }

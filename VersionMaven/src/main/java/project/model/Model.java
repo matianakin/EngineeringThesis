@@ -322,7 +322,7 @@ public class Model {
         }
     }
 
-    public static String[] readLinesFromFile(String filePath) {
+    public String[] readLinesFromFile(String filePath) {
         ArrayList<String> lines = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line = null;
@@ -368,10 +368,11 @@ public class Model {
                 String line = text2[i];
                 try {
                     writer.write(line);
+                    writer.write("\n");
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-                if(shortText[i+1]!=null&&longText[i+1]!=null&&longText[i+1+lengthDif]!=null&&longText[i+1+lengthDif].equalsIgnoreCase(shortText[i+1]))
+                if(i+1<shortText.length&&longText[i+1]!=null&&i+1+lengthDif< longText.length&&longText[i+1+lengthDif].equalsIgnoreCase(shortText[i+1]))
                 {
                     if(Arrays.equals(text2, longText))
                     {
@@ -379,16 +380,20 @@ public class Model {
                         {
                             try {
                                 writer.write(text2[i+j]);
+                                writer.write("\n");
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }
                         }
                     }
-                    else {
-                        break;
-                    }
+                    break;
                 }
             }
+        }
+        try {
+            writer.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
