@@ -28,6 +28,7 @@ painting - img
 graphic - img
 input form - input
 insert form - insert
+radio button - input
 user input - kbd
 line - l
 list item - li

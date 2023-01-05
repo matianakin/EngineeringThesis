@@ -10,9 +10,7 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
-/**
- * The type Model.
- */
+
 public class Model {
 
     private final Map<String, String> dictionary = new HashMap<>();
@@ -41,12 +39,7 @@ public class Model {
     }
 
 
-    /**
-     * Read from file string [ ].
-     *
-     * @param path the path
-     * @return the string [ ]
-     */
+
     public String[] readFromFile(String path) {
         String[] ret = null;
         try {
@@ -58,12 +51,6 @@ public class Model {
     }
 
 
-    /**
-     * Read from xhtml file string.
-     *
-     * @param path the path
-     * @return the string
-     */
     public String readFromXHTMLFile(String path) {
         String ret = null;
         try {
@@ -74,11 +61,7 @@ public class Model {
         return ret;
     }
 
-    /**
-     * Print string array.
-     *
-     * @param array the array
-     */
+
     public void printStringArray(String[] array) {
         for (String s : array) {
             System.out.println(s);
@@ -146,9 +129,6 @@ public class Model {
         }
     }
 
-    /**
-     * Read dictionary.
-     */
     public void readDictionary()
     {
         try (BufferedReader reader = new BufferedReader(new FileReader("dictionary.txt"))) {
@@ -165,11 +145,7 @@ public class Model {
         //System.out.println(dictionary);
     }
 
-    /**
-     * Gets dictionary.
-     *
-     * @return the dictionary
-     */
+
     public Map<String, String> getDictionary() {
         return dictionary;
     }
@@ -307,8 +283,6 @@ public class Model {
 
             Thread.sleep(1000);
 
-
-            // Get the page source
             String response = driver.getPageSource();
 
             //System.out.println(response.toString());
@@ -316,6 +290,51 @@ public class Model {
             PrintWriter writer = new PrintWriter("xhtmlAfterButton.txt", StandardCharsets.UTF_8);
             writer.println(response);
             writer.close();
+            driver.quit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void inputFieldSimulator(String inputName, String inputValue) {
+        try {
+            WebDriver driver = new ChromeDriver();
+
+            driver.get(address);
+
+            WebElement input = driver.findElement(By.name(inputName));
+            input.sendKeys(inputValue);
+
+            String response = driver.getPageSource();
+
+            PrintWriter writer = new PrintWriter("xhtmlAfterInputField.txt", StandardCharsets.UTF_8);
+            writer.println(response);
+            writer.close();
+
+            driver.quit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void formSimulator(String formId, String inputName, String inputValue) {
+        try {
+            WebDriver driver = new ChromeDriver();
+
+            driver.get(address);
+
+            WebElement form = driver.findElement(By.id(formId));
+            WebElement input = form.findElement(By.name(inputName));
+            input.sendKeys(inputValue);
+
+            form.submit();
+
+            String response = driver.getPageSource();
+
+            PrintWriter writer = new PrintWriter("xhtmlAfterFormSubmit.txt", StandardCharsets.UTF_8);
+            writer.println(response);
+            writer.close();
+
             driver.quit();
         } catch (Exception e) {
             e.printStackTrace();
@@ -364,7 +383,6 @@ public class Model {
         {
             if(!longText[i].equalsIgnoreCase(shortText[i]))
             {
-                //add what exactly to save
                 String line = text2[i];
                 try {
                     writer.write(line);
