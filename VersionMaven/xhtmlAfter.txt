@@ -1,0 +1,166 @@
+<html><head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>JODA DRUK | Drukarnia cyfrowa w Gliwicach</title>
+    <title>JODA DRUK | Drukarnia cyfrowa w Gliwicach</title>
+    <meta name="description" content="Wydruki  wielkoformatowe A4-A0+, bindowanie, oprawa dokumentacji, laminowanie oraz skanowanie. Wydział Budownictwa Politechniki Śląskiej Gliwice">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="./assets/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="./assets/favicon-16x16.png" sizes="16x16">
+
+    <script src="app.js" defer=""></script>
+  </head>
+  <body>
+    <!--[if lt IE 7]>
+      <p class="browsehappy">
+        You are using an <strong>outdated</strong> browser. Please
+        <a href="#">upgrade your browser</a> to improve your experience.
+      </p>
+    <![endif]-->
+    <div class="container">
+      <nav class="navbar">
+        <img src="./assets/logo.png">
+        <a href="#" class="toggle-button">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </a>
+
+        <div class="navbar-links">
+          <ul>
+            <li><a href="#main">Aktualności</a></li>
+            <li><a href="#cennik">Cennik</a></li>
+            <li><a href="#contact">Kontakt</a></li>
+          </ul>
+        </div>
+      </nav>
+      <!--xxx
+      <div class="alert">
+        <span
+          class="closebtn"
+          onclick="this.parentElement.style.display='none';"
+          >&times;</span
+        >
+        W dniu 31.10-01.11.2022 r. drukarnia będzię NIECZYNNA.  Zapraszamy ponownie już od środy 02.11.2022 r.
+      </p >
+       
+      </div>
+   <!--xx-->
+      <div class="main" id="main">
+        <img src="./assets/mainGrapic.png" alt="JODA DRUK main graphic">
+        <div class="main-text">
+          <h1>
+            Niech
+            <span class="yellow">druk</span>
+            będzie z Tobą!
+          </h1>
+          <h2>
+            Drukarnia cyfrowa w Gliwicach, wydruki wielkoformatowe oraz oprawa
+            dokumentacji.
+          </h2>
+        </div>
+      </div>
+
+      <div class="prices" id="cennik">
+        <h2 class="title">Cennik</h2>
+        <div class="buttons">
+          <button id="btnMaloForm" style="background-color: rgb(0, 2, 39); color: white;">wydruki małoformatowe</button>
+          <button id="btnWielkoForm" style="background-color: rgb(0, 2, 39); color: white;">wydruki wielkoformatowe</button>
+          <button id="btnBind" style="background-color: rgb(0, 2, 39); color: white;">oprawa</button>
+          <button id="btnDypl" style="background-color: white; color: rgb(0, 2, 39);">inne</button>
+        </div>
+        <div id="content">
+
+<h2>Laminowanie</h2><table class="tg">
+  
+<tbody><tr>
+  <td class="double">A4
+  </td><td class="double">3,00 zł
+</td></tr>
+
+<tr>
+  <td class="double">A3</td>
+  <td class="double">6,00 zł</td>
+</tr>
+
+
+</tbody></table>
+
+
+
+
+<h2>Skanowanie</h2><table class="tg">
+  
+<tbody><tr>
+  <td class="double">Skanowanie ręczne
+  </td><td class="double">0,80 zł *
+</td></tr>
+
+<tr>
+  <td class="double">Skanowanie automatyczne</td>
+  <td class="double">0,40 zł *</td>
+</tr>
+
+
+</tbody></table>
+<h2>Dodatkowo</h2><table class="tg">
+  
+<tbody><tr>
+  <td class="double">Zapis z CAD
+  </td><td class="double">1,50 zł
+</td></tr>
+
+<tr>
+  <td class="double">Edycja tekst/rysunek</td>
+  <td class="double">2,00 zł</td>
+</tr>
+
+<tr>
+  <td class="double">Nagranie CD</td>
+  <td class="double">2,00 zł</td>
+</tr>
+
+
+</tbody></table><h5>* - cena podlega negocjacji</h5></div>
+        <h3>cennik obowiązuje od 01.12.2022 r.</h3>
+      </div>
+      <div class="contact" id="contact">
+        <h2 class="title">Kontakt</h2>
+        <img class="planets" src="./assets/planets.png">
+        <div class="info-container">
+          <a class="info" href="tel: 535070578">
+            <img src="./assets/call.png" alt="535 070 578">
+            <h4>535 070 578</h4>
+          </a>
+          <a class="info" href="mailto: kontakt@jodadruk.pl">
+            <img src="./assets/message.png" alt="kontakt@jodadruk.pl">
+            <h4>kontakt@jodadruk.pl</h4>
+          </a>
+          <a class="info" id="facebook" href="https://www.facebook.com/jodadruk/">
+            <img src="./assets/facebook.png" alt="facebook.com/jodadruk">
+            <h4>facebook.com/jodadruk</h4>
+          </a>
+          <a class="info" href="https://www.google.com/maps/place/JODA+DRUK/@50.2900732,18.6774169,17.6z/data=!4m5!3m4!1s0x0:0xe70bb86eab8e11a3!8m2!3d50.289938!4d18.677906">
+            <img src="./assets/locationpin.png" alt="Wydział Budownictwa Politechniki Śląskiej">
+            <div>
+              <h4>Wydział Budownictwa Politechniki Śląskiej</h4>
+              <h5>ul. Akademicka 5 Gliwice</h5>
+            </div>
+          </a>
+          <div class="info">
+            <img src="./assets/directionboard.png" alt="joda druk direction">
+            <h4>pok. 027 (piwnica, obok strefy studenta)</h4>
+          </div>
+          <div class="info">
+            <img src="./assets/clock.png" alt="clock icon">
+            <h4>Od poniedziałku do piątku 8:00 do 15:00</h4>
+          </div>
+        </div>
+      </div>
+      <div class="footer">© 2022 Joda druk. All rights reserved.</div>
+    </div>
+    <script type="module" src="content.js"></script>
+  
+
+</body></html>

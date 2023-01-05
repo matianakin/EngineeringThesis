@@ -44,6 +44,9 @@ public class Model {
         String[] ret = null;
         try {
             ret = readFromInputStream(new FileInputStream(path)).split("\n");
+            for (int i = 0; i < ret.length; i++) {
+                ret[i] = ret[i].toLowerCase();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -218,6 +221,34 @@ public class Model {
 
     }
 
+    private void analyzeCondition(String req)
+    {
+        String[] words = req.split("\\s+");
+
+        switch (words [1])
+        {
+            case "button":
+            {
+                buttonSimulator(words[2]);
+                compare(readLinesFromFile("xhtml.txt"), readLinesFromFile("xhtmlAfter.txt"));
+                break;
+            }
+            case "input":
+            {
+                if(words[3].equalsIgnoreCase("in") && words[4].equalsIgnoreCase("form"))
+                {
+                    formSimulator(words[2], words[5], words[7]);
+                    compare(readLinesFromFile("xhtml.txt"), readLinesFromFile("xhtmlAfter.txt"));
+                }
+                else
+                {
+                    inputFieldSimulator(words[2], words[4]);
+                    compare(readLinesFromFile("xhtml.txt"), readLinesFromFile("xhtmlAfter.txt"));
+                }
+                break;
+            }
+        }
+    }
 
     public void iterateReqs()
     {
@@ -234,6 +265,10 @@ public class Model {
                 String toAnalyze = req.substring(j + 1);
 
                 counter(toAnalyze, number);
+            }
+            else if ((req.charAt(0) == 'i' || req.charAt(0)=='I')&&((req.charAt(1) == 'f' || req.charAt(1)=='F')))
+            {
+                analyzeCondition(req);
             }
         }
     }
@@ -287,7 +322,7 @@ public class Model {
 
             //System.out.println(response.toString());
 
-            PrintWriter writer = new PrintWriter("xhtmlAfterButton.txt", StandardCharsets.UTF_8);
+            PrintWriter writer = new PrintWriter("xhtmlAfter.txt", StandardCharsets.UTF_8);
             writer.println(response);
             writer.close();
             driver.quit();
@@ -307,7 +342,7 @@ public class Model {
 
             String response = driver.getPageSource();
 
-            PrintWriter writer = new PrintWriter("xhtmlAfterInputField.txt", StandardCharsets.UTF_8);
+            PrintWriter writer = new PrintWriter("xhtmlAfter.txt", StandardCharsets.UTF_8);
             writer.println(response);
             writer.close();
 
@@ -331,7 +366,7 @@ public class Model {
 
             String response = driver.getPageSource();
 
-            PrintWriter writer = new PrintWriter("xhtmlAfterFormSubmit.txt", StandardCharsets.UTF_8);
+            PrintWriter writer = new PrintWriter("xhtmlAfter.txt", StandardCharsets.UTF_8);
             writer.println(response);
             writer.close();
 

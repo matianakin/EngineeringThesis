@@ -27,8 +27,9 @@ picture - img
 painting - img
 graphic - img
 input form - input
-insert form - insert
+input field - input
 radio button - input
+insert form - insert
 user input - kbd
 line - l
 list item - li

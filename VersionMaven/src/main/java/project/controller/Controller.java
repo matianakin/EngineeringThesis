@@ -41,8 +41,6 @@ public class Controller {
         model.removeS();
         model.swapWords();
         model.iterateReqs();
-        model.buttonSimulator("btnDypl");
-        model.compare(model.readLinesFromFile("xhtml.txt"), model.readLinesFromFile("xhtmlAfterButton.txt"));
         view.setText(model.getErrors().toString());
 
 
