@@ -268,12 +268,28 @@ public class Model {
     {
         String[] words = req.split("\\s+");
 
+        int i=0;
+
         switch (words [1])
         {
             case "button":
             {
                 buttonSimulator(words[2]);
-
+                break;
+            }
+            case "radio":
+            {
+                radioButtonSimulator(words[2], words[4]);
+                break;
+            }
+            case "checkbox":
+            {
+                checkboxSimulator(words[2]);
+                break;
+            }
+            case "select":
+            {
+                dropdownSimulator(words[2], words[4]);
                 break;
             }
             case "input":
@@ -288,6 +304,8 @@ public class Model {
                 }
                 break;
             }
+            default:
+                throw new IllegalStateException("Unexpected value: " + words[1]);
         }
         compare(readLinesFromFile("xhtml.txt"), readLinesFromFile("xhtmlAfter.txt"));
     }
@@ -408,6 +426,12 @@ public class Model {
         }
     }
 
+    /**
+     * Radio button simulator.
+     *
+     * @param radioButtonName  the radio button name
+     * @param radioButtonValue the radio button value
+     */
     public void radioButtonSimulator(String radioButtonName, String radioButtonValue) {
         try {
             WebDriver driver = new ChromeDriver();
@@ -430,6 +454,11 @@ public class Model {
     }
 
 
+    /**
+     * Checkbox simulator.
+     *
+     * @param checkboxId the checkbox id
+     */
     public void checkboxSimulator(String checkboxId) {
         try {
             WebDriver driver = new ChromeDriver();
@@ -448,6 +477,12 @@ public class Model {
         }
     }
 
+    /**
+     * Dropdown simulator.
+     *
+     * @param dropdownId  the dropdown id
+     * @param optionValue the option value
+     */
     public void dropdownSimulator(String dropdownId, String optionValue) {
         try {
             WebDriver driver = new ChromeDriver();
@@ -470,7 +505,6 @@ public class Model {
             e.printStackTrace();
         }
     }
-
 
 
     /**

@@ -28,7 +28,7 @@ painting - img
 graphic - img
 input form - input
 input field - input
-radio button - input
+radio button - radio
 insert form - insert
 user input - kbd
 line - l
@@ -48,6 +48,7 @@ sample output - samp
 secret input - secret
 single select - select1
 multiple select - select
+dropdown menu - select
 break - separator
 set focus - setfocus
 index - setindex
