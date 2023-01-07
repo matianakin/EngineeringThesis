@@ -5,12 +5,16 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.Select;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 
+/**
+ * The type Model.
+ */
 public class Model {
 
     private final Map<String, String> dictionary = new HashMap<>();
@@ -39,7 +43,12 @@ public class Model {
     }
 
 
-
+    /**
+     * Read from file string [ ].
+     *
+     * @param path the path
+     * @return the string [ ]
+     */
     public String[] readFromFile(String path) {
         String[] ret = null;
         try {
@@ -54,6 +63,12 @@ public class Model {
     }
 
 
+    /**
+     * Read from xhtml file string.
+     *
+     * @param path the path
+     * @return the string
+     */
     public String readFromXHTMLFile(String path) {
         String ret = null;
         try {
@@ -65,6 +80,11 @@ public class Model {
     }
 
 
+    /**
+     * Print string array.
+     *
+     * @param array the array
+     */
     public void printStringArray(String[] array) {
         for (String s : array) {
             System.out.println(s);
@@ -72,6 +92,9 @@ public class Model {
     }
 
 
+    /**
+     * Get xhtml.
+     */
     public void GetXHTML () {
         try {
             /*
@@ -132,6 +155,9 @@ public class Model {
         }
     }
 
+    /**
+     * Read dictionary.
+     */
     public void readDictionary()
     {
         try (BufferedReader reader = new BufferedReader(new FileReader("dictionary.txt"))) {
@@ -149,6 +175,11 @@ public class Model {
     }
 
 
+    /**
+     * Gets dictionary.
+     *
+     * @return the dictionary
+     */
     public Map<String, String> getDictionary() {
         return dictionary;
     }
@@ -162,6 +193,9 @@ public class Model {
     }*/
 
 
+    /**
+     * Remove s.
+     */
     public void removeS()
     {
         for(int i=0; i< reqs.length; i++)
@@ -179,6 +213,9 @@ public class Model {
     }
 
 
+    /**
+     * Swap words.
+     */
     public void swapWords()
     {
         for (Map.Entry<String, String> set : dictionary.entrySet())
@@ -194,6 +231,12 @@ public class Model {
         }
     }
 
+    /**
+     * Counter.
+     *
+     * @param search the search
+     * @param number the number
+     */
     public void counter(String search, int number)
     {
         String toSearch1 = "<"+search+" ";
@@ -230,7 +273,7 @@ public class Model {
             case "button":
             {
                 buttonSimulator(words[2]);
-                compare(readLinesFromFile("xhtml.txt"), readLinesFromFile("xhtmlAfter.txt"));
+
                 break;
             }
             case "input":
@@ -238,18 +281,20 @@ public class Model {
                 if(words[3].equalsIgnoreCase("in") && words[4].equalsIgnoreCase("form"))
                 {
                     formSimulator(words[2], words[5], words[7]);
-                    compare(readLinesFromFile("xhtml.txt"), readLinesFromFile("xhtmlAfter.txt"));
                 }
                 else
                 {
                     inputFieldSimulator(words[2], words[4]);
-                    compare(readLinesFromFile("xhtml.txt"), readLinesFromFile("xhtmlAfter.txt"));
                 }
                 break;
             }
         }
+        compare(readLinesFromFile("xhtml.txt"), readLinesFromFile("xhtmlAfter.txt"));
     }
 
+    /**
+     * Iterate reqs.
+     */
     public void iterateReqs()
     {
         for (String req : reqs) {
@@ -273,6 +318,11 @@ public class Model {
         }
     }
 
+    /**
+     * Button simulator.
+     *
+     * @param id the id
+     */
     public void buttonSimulator(String id)
     {
         try {
@@ -331,6 +381,12 @@ public class Model {
         }
     }
 
+    /**
+     * Input field simulator.
+     *
+     * @param inputName  the input name
+     * @param inputValue the input value
+     */
     public void inputFieldSimulator(String inputName, String inputValue) {
         try {
             WebDriver driver = new ChromeDriver();
@@ -352,6 +408,78 @@ public class Model {
         }
     }
 
+    public void radioButtonSimulator(String radioButtonName, String radioButtonValue) {
+        try {
+            WebDriver driver = new ChromeDriver();
+
+            driver.get(address);
+
+            WebElement radioButton = driver.findElement(By.cssSelector("input[name='" + radioButtonName + "'][value='" + radioButtonValue + "']"));
+
+            if (!radioButton.isSelected()) {
+                radioButton.click();
+            }
+            String response = driver.getPageSource();
+            PrintWriter writer = new PrintWriter("xhtmlAfter.txt", StandardCharsets.UTF_8);
+            writer.println(response);
+            writer.close();
+            driver.quit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void checkboxSimulator(String checkboxId) {
+        try {
+            WebDriver driver = new ChromeDriver();
+            driver.get(address);
+            WebElement checkbox = driver.findElement(By.id(checkboxId));
+            if (!checkbox.isSelected()) {
+                checkbox.click();
+            }
+            String response = driver.getPageSource();
+            PrintWriter writer = new PrintWriter("xhtmlAfter.txt", StandardCharsets.UTF_8);
+            writer.println(response);
+            writer.close();
+            driver.quit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void dropdownSimulator(String dropdownId, String optionValue) {
+        try {
+            WebDriver driver = new ChromeDriver();
+
+            driver.get(address);
+
+            WebElement dropdown = driver.findElement(By.id(dropdownId));
+
+            Select select = new Select(dropdown);
+            select.selectByValue(optionValue);
+
+            String response = driver.getPageSource();
+
+            PrintWriter writer = new PrintWriter("xhtmlAfter", StandardCharsets.UTF_8);
+            writer.println(response);
+            writer.close();
+
+            driver.quit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+    /**
+     * Form simulator.
+     *
+     * @param formId     the form id
+     * @param inputName  the input name
+     * @param inputValue the input value
+     */
     public void formSimulator(String formId, String inputName, String inputValue) {
         try {
             WebDriver driver = new ChromeDriver();
@@ -376,6 +504,12 @@ public class Model {
         }
     }
 
+    /**
+     * Read lines from file string [ ].
+     *
+     * @param filePath the file path
+     * @return the string [ ]
+     */
     public String[] readLinesFromFile(String filePath) {
         ArrayList<String> lines = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
@@ -389,6 +523,12 @@ public class Model {
         return lines.toArray(new String[0]);
     }
 
+    /**
+     * Compare.
+     *
+     * @param text1 the text 1
+     * @param text2 the text 2
+     */
     public  void compare(String[] text1, String[] text2)  {
         int lengthDif = Math.abs(text1.length- text2.length);
         ArrayList<String> diffs = new ArrayList<>();
@@ -450,35 +590,75 @@ public class Model {
         }
     }
 
+    /**
+     * Gets txt path.
+     *
+     * @return the txt path
+     */
     public String getTxtPath() {
         return txtPath;
     }
 
+    /**
+     * Sets txt path.
+     *
+     * @param txtPath the txt path
+     */
     public void setTxtPath(String txtPath) {
         this.txtPath = txtPath;
     }
 
+    /**
+     * Get reqs string [ ].
+     *
+     * @return the string [ ]
+     */
     public String[] getReqs() {
         return reqs;
     }
 
+    /**
+     * Sets reqs.
+     *
+     * @param reqs the reqs
+     */
     public void setReqs(String[] reqs) {
         this.reqs = reqs;
     }
 
+    /**
+     * Gets xhtml.
+     *
+     * @return the xhtml
+     */
     public String getXHTML() {
         return XHTML;
     }
 
+    /**
+     * Gets errors.
+     *
+     * @return the errors
+     */
     public List<String> getErrors() {
         return errors;
     }
 
+    /**
+     * Sets xhtml.
+     *
+     * @param XHTML the xhtml
+     */
     public void setXHTML(String XHTML) {
         this.XHTML = XHTML;
     }
 
 
+    /**
+     * Sets address.
+     *
+     * @param address the address
+     */
     public void setAddress(String address) {
         this.address = address;
     }
