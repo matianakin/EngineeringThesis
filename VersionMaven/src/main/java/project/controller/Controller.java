@@ -3,8 +3,6 @@ package project.controller;
 import project.model.Model;
 import project.view.View;
 
-import static java.lang.System.exit;
-
 
 /**
  * The type Controller.
@@ -29,8 +27,7 @@ public class Controller {
     /**
      * Controller.
      */
-    private void controller()
-    {
+    private void controller() {
         model.readDictionary();
         view.buttonProceedClicked();
         view.cleanText();
@@ -42,9 +39,6 @@ public class Controller {
         model.swapWords();
         model.iterateReqs();
         view.setText(model.getErrors().toString());
-
-
-        exit(0);
     }
 
 }

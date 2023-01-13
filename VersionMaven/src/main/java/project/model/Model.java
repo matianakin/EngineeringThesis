@@ -371,7 +371,9 @@ public class Model {
             }
             in.close();*/
 
-            WebDriver driver = new ChromeDriver();
+            ChromeOptions options = new ChromeOptions();
+            options.setHeadless(true);
+            WebDriver driver = new ChromeDriver(options);
 
             driver.get(address);
 
@@ -407,7 +409,9 @@ public class Model {
      */
     public void inputFieldSimulator(String inputName, String inputValue) {
         try {
-            WebDriver driver = new ChromeDriver();
+            ChromeOptions options = new ChromeOptions();
+            options.setHeadless(true);
+            WebDriver driver = new ChromeDriver(options);
 
             driver.get(address);
 
@@ -434,7 +438,9 @@ public class Model {
      */
     public void radioButtonSimulator(String radioButtonName, String radioButtonValue) {
         try {
-            WebDriver driver = new ChromeDriver();
+            ChromeOptions options = new ChromeOptions();
+            options.setHeadless(true);
+            WebDriver driver = new ChromeDriver(options);
 
             driver.get(address);
 
@@ -461,7 +467,9 @@ public class Model {
      */
     public void checkboxSimulator(String checkboxId) {
         try {
-            WebDriver driver = new ChromeDriver();
+            ChromeOptions options = new ChromeOptions();
+            options.setHeadless(true);
+            WebDriver driver = new ChromeDriver(options);
             driver.get(address);
             WebElement checkbox = driver.findElement(By.id(checkboxId));
             if (!checkbox.isSelected()) {
@@ -485,7 +493,9 @@ public class Model {
      */
     public void dropdownSimulator(String dropdownId, String optionValue) {
         try {
-            WebDriver driver = new ChromeDriver();
+            ChromeOptions options = new ChromeOptions();
+            options.setHeadless(true);
+            WebDriver driver = new ChromeDriver(options);
 
             driver.get(address);
 
@@ -516,7 +526,9 @@ public class Model {
      */
     public void formSimulator(String formId, String inputName, String inputValue) {
         try {
-            WebDriver driver = new ChromeDriver();
+            ChromeOptions options = new ChromeOptions();
+            options.setHeadless(true);
+            WebDriver driver = new ChromeDriver(options);
 
             driver.get(address);
 
@@ -547,7 +559,7 @@ public class Model {
     public String[] readLinesFromFile(String filePath) {
         ArrayList<String> lines = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            String line = null;
+            String line;
             while ((line = reader.readLine()) != null) {
                 lines.add(line);
             }
@@ -565,8 +577,7 @@ public class Model {
      */
     public  void compare(String[] text1, String[] text2)  {
         int lengthDif = Math.abs(text1.length- text2.length);
-        ArrayList<String> diffs = new ArrayList<>();
-        int shortLength =0;
+        int shortLength;
         var longText = text1;
         var shortText = text2;
         if(text1.length> text2.length)
@@ -580,7 +591,7 @@ public class Model {
             shortText=text1;
         }
 
-        BufferedWriter writer = null;
+        BufferedWriter writer;
 
         try {
              writer = new BufferedWriter(new FileWriter("diff.txt"));
