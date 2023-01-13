@@ -263,7 +263,12 @@ public class Model {
         }
 
     }
-
+    
+    private void afterThen(int i, String[] words)
+    {
+       //10 możliwości heh
+    }
+    
     private void analyzeCondition(String req)
     {
         String[] words = req.split("\\s+");
@@ -296,7 +301,7 @@ public class Model {
             {
                 if(words[3].equalsIgnoreCase("in") && words[4].equalsIgnoreCase("form"))
                 {
-                    formSimulator(words[2], words[5], words[7]);
+                    formInputSimulator(words[2], words[5], words[7]);
                 }
                 else
                 {
@@ -305,9 +310,26 @@ public class Model {
                 break;
             }
             default:
-                throw new IllegalStateException("Unexpected value: " + words[1]);
+                errors.add("Unrecognized element in the conditional statement in requirements ");
+                //throw new IllegalStateException("Unexpected value: " + words[1]);
+                return;
         }
         compare(readLinesFromFile("xhtml.txt"), readLinesFromFile("xhtmlAfter.txt"));
+
+        for(;i< words.length;i++)
+        {
+            if(words[i].equalsIgnoreCase("then")) {
+                break;
+            }
+        }
+        if(i== words.length)
+        {
+            errors.add("Missing \"then\" in the conditional statement in requirements ");
+        }
+        else
+        {
+            afterThen(i, words);
+        }
     }
 
     /**
@@ -524,7 +546,7 @@ public class Model {
      * @param inputName  the input name
      * @param inputValue the input value
      */
-    public void formSimulator(String formId, String inputName, String inputValue) {
+    public void formInputSimulator(String formId, String inputName, String inputValue) {
         try {
             ChromeOptions options = new ChromeOptions();
             options.setHeadless(true);
