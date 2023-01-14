@@ -264,6 +264,51 @@ public class Model {
 
     }
 
+    boolean isDeleted(String element, String[] added, String[] deleted)
+    {
+        for (String d: deleted) {
+            if (d.contains(element)) {
+                String [] words = d.split("\\s+");
+                String id;
+                for (int i=0; i<words.length; i++)
+                {
+                    if(words[i].equalsIgnoreCase("id"))
+                    {
+                        id=words[i+1];
+                        for (String s : added)
+                        {
+                            if(s.contains(element) && s.contains(id))
+                            {
+                                return false;
+                            }
+                        }
+                        return true;
+                    }
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+
+    boolean isDeleted(String element, String id, String[] added, String[] deleted)
+    {
+        for (String d : deleted) {
+            if (d.contains(element) && d.contains(id))
+            {
+                for (String s: added)
+                {
+                    if(s.contains(element) && s.contains(id))
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+
     boolean isAdded(String element, String[] added, String[] deleted)
     {
         for (String s : added) {
@@ -314,6 +359,7 @@ public class Model {
     private void afterThen(int i, String[] words, String[] added, String[] deleted)
     {
        //10 możliwości heh
+
     }
     
     private void analyzeCondition(String req)
