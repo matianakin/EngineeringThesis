@@ -262,7 +262,53 @@ public class Model {
         }
     }
 
-    boolean styleChanged(String id, String[] added, String[] deleted)
+    private boolean valueChanged(String id, String[] added, String[] deleted)
+    {
+        String valueBeg="";
+        String valueEnd="";
+        for(String d: deleted)
+        {
+            if(d.contains(id))
+            {
+                valueBeg=d;
+                break;
+            }
+        }
+        for(String a: added)
+        {
+            if(a.contains(id))
+            {
+                valueEnd=a;
+                break;
+            }
+        }
+        String[] wordsBeg = valueBeg.split("\\s+");
+        String[] wordsEnd = valueEnd.split("\\s+");
+
+        String value1="";
+        String value2="";
+
+        for(String word: wordsBeg)
+        {
+            if(word.contains("value"))
+            {
+                value1=word;
+                break;
+            }
+        }
+        for (String word:wordsEnd)
+        {
+            if(word.contains("value"))
+            {
+                value2=word;
+                break;
+            }
+        }
+
+        return !value1.equalsIgnoreCase(value2);
+    }
+
+    private boolean styleChanged(String id, String[] added, String[] deleted)
     {
         String styleBeg="";
         String styleEnd="";
@@ -308,7 +354,7 @@ public class Model {
         return !style1.equalsIgnoreCase(style2);
     }
 
-    boolean isEnabled(String id, String[] added, String[] deleted)
+    private boolean isEnabled(String id, String[] added, String[] deleted)
     {
         for (String d: deleted)
         {
@@ -327,7 +373,7 @@ public class Model {
         return false;
     }
 
-    boolean isDisabled(String id, String[] added, String[] deleted)
+    private boolean isDisabled(String id, String[] added, String[] deleted)
     {
         for (String s:added)
         {
@@ -346,7 +392,7 @@ public class Model {
         return false;
     }
 
-    boolean isDeleted(String element, String[] added, String[] deleted)
+    private boolean isDeleted(String element, String[] added, String[] deleted)
     {
         for (String d: deleted) {
             if (d.contains(element)) {
@@ -369,7 +415,7 @@ public class Model {
         return false;
     }
 
-    boolean isDeleted(String element, String id, String[] added, String[] deleted)
+    private boolean isDeleted(String element, String id, String[] added, String[] deleted)
     {
         for (String d : deleted) {
             if (d.contains(element) && d.contains(id))
@@ -387,7 +433,7 @@ public class Model {
         return false;
     }
 
-    boolean isAdded(String element, String[] added, String[] deleted)
+    private boolean isAdded(String element, String[] added, String[] deleted)
     {
         for (String s : added) {
             if (s.contains(element)) {
@@ -410,7 +456,7 @@ public class Model {
         return false;
     }
 
-    boolean isAdded(String element, String id, String[] added, String[] deleted)
+    private boolean isAdded(String element, String id, String[] added, String[] deleted)
     {
         for (String s : added) {
             if (s.contains(element) && s.contains(id))
@@ -427,8 +473,6 @@ public class Model {
         }
         return false;
     }
-
-
 
     private void afterThen(int i, String[] words, String[] added, String[] deleted)
     {
@@ -452,9 +496,19 @@ public class Model {
            }
            case "change":
            {
-               if(styleChanged(words[i+1], added, deleted))
+               if(words[i+3].equalsIgnoreCase("style")) {
+                   if (styleChanged(words[i + 1], added, deleted)) {
+                       errors.add("\n The condition " + Arrays.toString(words) + " is not satisfied");
+                   }
+               }
+               else if (words[i+3].equalsIgnoreCase("value")){
+                   if (valueChanged(words[i + 1], added, deleted)) {
+                       errors.add("\n The condition " + Arrays.toString(words) + " is not satisfied");
+                   }
+               }
+               else
                {
-                   errors.add("\n The condition "+ Arrays.toString(words) + " is not satisfied");
+                   errors.add("\n Conditional part after \"then\" not recognized");
                }
                break;
            }
