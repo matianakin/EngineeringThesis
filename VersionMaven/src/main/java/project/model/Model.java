@@ -284,7 +284,30 @@ public class Model {
                 break;
             }
         }
-        return ((styleBeg.contains("style") || styleEnd.contains("style"))&&!styleBeg.equalsIgnoreCase(styleEnd));
+        String[] wordsBeg = styleBeg.split("\\s+");
+        String[] wordsEnd = styleEnd.split("\\s+");
+
+        String style1="";
+        String style2="";
+
+        for(String word: wordsBeg)
+        {
+            if(word.contains("style"))
+            {
+                style1=word;
+                break;
+            }
+        }
+        for (String word:wordsEnd)
+        {
+            if(word.contains("style"))
+            {
+                style2=word;
+                break;
+            }
+        }
+
+        return !style1.equalsIgnoreCase(style2);
     }
 
     boolean isEnabled(String id, String[] added, String[] deleted)
@@ -312,7 +335,7 @@ public class Model {
         {
             if(s.contains(id) && s.contains("disabled"))
             {
-                for( String d:deleted)
+                for(String d:deleted)
                 {
                     if(d.contains(id))
                     {
@@ -331,15 +354,11 @@ public class Model {
             if (d.contains(element)) {
                 String [] words = d.split("\\s+");
                 String id;
-                for (int i=0; i<words.length; i++)
-                {
-                    if(words[i].equalsIgnoreCase("id"))
-                    {
-                        id=words[i+1];
-                        for (String s : added)
-                        {
-                            if(s.contains(element) && s.contains(id))
-                            {
+                for (String word : words) {
+                    if (word.contains("id")) {
+                        id = word;
+                        for (String s : added) {
+                            if (s.contains(element) && s.contains(id)) {
                                 return false;
                             }
                         }
@@ -376,15 +395,11 @@ public class Model {
             if (s.contains(element)) {
                 String [] words = s.split("\\s+");
                 String id;
-                for (int i=0; i<words.length; i++)
-                {
-                    if(words[i].equalsIgnoreCase("id"))
-                    {
-                        id=words[i+1];
-                        for (String d: deleted)
-                        {
-                            if(d.contains(element) && d.contains(id))
-                            {
+                for (String word : words) {
+                    if (word.contains("id")) {
+                        id = word;
+                        for (String d : deleted) {
+                            if (d.contains(element) && d.contains(id)) {
                                 return false;
                             }
                         }
