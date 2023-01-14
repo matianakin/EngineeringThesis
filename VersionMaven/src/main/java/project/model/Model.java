@@ -264,6 +264,29 @@ public class Model {
 
     }
 
+    boolean styleChanged(String id, String[] added, String[] deleted)
+    {
+        String styleBeg="";
+        String styleEnd="";
+        for(String d: deleted)
+        {
+            if(d.contains(id))
+            {
+                styleBeg=d;
+                break;
+            }
+        }
+        for(String a: added)
+        {
+            if(a.contains(id))
+            {
+                styleEnd=a;
+                break;
+            }
+        }
+        return ((styleBeg.contains("style") || styleEnd.contains("style"))&&!styleBeg.equalsIgnoreCase(styleEnd));
+    }
+
     boolean isEnabled(String id, String[] added, String[] deleted)
     {
         for (String d: deleted)
