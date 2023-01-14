@@ -264,6 +264,44 @@ public class Model {
 
     }
 
+    boolean isEnabled(String id, String[] added, String[] deleted)
+    {
+        for (String d: deleted)
+        {
+            if(d.contains(id) && d.contains("disabled"))
+            {
+                for( String s: added)
+                {
+                    if(s.contains(id))
+                    {
+                        return !s.contains("disabled");
+                    }
+                }
+                return false;
+            }
+        }
+        return false;
+    }
+
+    boolean isDisabled(String id, String[] added, String[] deleted)
+    {
+        for (String s:added)
+        {
+            if(s.contains(id) && s.contains("disabled"))
+            {
+                for( String d:deleted)
+                {
+                    if(d.contains(id))
+                    {
+                        return !d.contains("disabled");
+                    }
+                }
+                return false;
+            }
+        }
+        return false;
+    }
+
     boolean isDeleted(String element, String[] added, String[] deleted)
     {
         for (String d: deleted) {
