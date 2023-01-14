@@ -262,6 +262,52 @@ public class Model {
         }
     }
 
+    private boolean classChanged(String id, String[] added, String[] deleted)
+    {
+        String classBeg="";
+        String classEnd="";
+        for(String d: deleted)
+        {
+            if(d.contains(id))
+            {
+                classBeg=d;
+                break;
+            }
+        }
+        for(String a: added)
+        {
+            if(a.contains(id))
+            {
+                classEnd=a;
+                break;
+            }
+        }
+        String[] wordsBeg = classBeg.split("\\s+");
+        String[] wordsEnd = classEnd.split("\\s+");
+
+        String class1="";
+        String class2="";
+
+        for(String word: wordsBeg)
+        {
+            if(word.contains("class"))
+            {
+                class1=word;
+                break;
+            }
+        }
+        for (String word:wordsEnd)
+        {
+            if(word.contains("class"))
+            {
+                class2=word;
+                break;
+            }
+        }
+
+        return !class1.equalsIgnoreCase(class2);
+    }
+
     private boolean valueChanged(String id, String[] added, String[] deleted)
     {
         String valueBeg="";
@@ -503,6 +549,11 @@ public class Model {
                }
                else if (words[i+3].equalsIgnoreCase("value")){
                    if (valueChanged(words[i + 1], added, deleted)) {
+                       errors.add("\n The condition " + Arrays.toString(words) + " is not satisfied");
+                   }
+               }
+               else if (words[i+3].equalsIgnoreCase("class")){
+                   if (classChanged(words[i + 1], added, deleted)) {
                        errors.add("\n The condition " + Arrays.toString(words) + " is not satisfied");
                    }
                }
