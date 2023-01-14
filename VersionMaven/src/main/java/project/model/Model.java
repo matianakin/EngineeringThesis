@@ -259,12 +259,59 @@ public class Model {
 
         if(count != number)
         {
-            errors.add("Wrong number of occurrences of "+search+", supposed to be "+number+", is "+count+"\n");
+            errors.add("\n"+"Wrong number of occurrences of "+search+", supposed to be "+number+", is "+count);
         }
 
     }
-    
-    private void afterThen(int i, String[] words)
+
+    boolean isAdded(String element, String[] added, String[] deleted)
+    {
+        for (String s : added) {
+            if (s.contains(element)) {
+                String [] words = s.split("\\s+");
+                String id;
+                for (int i=0; i<words.length; i++)
+                {
+                    if(words[i].equalsIgnoreCase("id"))
+                    {
+                        id=words[i+1];
+                        for (String d: deleted)
+                        {
+                            if(d.contains(element) && d.contains(id))
+                            {
+                                return false;
+                            }
+                        }
+                        return true;
+                    }
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+
+    boolean isAdded(String element, String id, String[] added, String[] deleted)
+    {
+        for (String s : added) {
+            if (s.contains(element) && s.contains(id))
+            {
+                for (String d: deleted)
+                {
+                    if(d.contains(element) && d.contains(id))
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+
+    private void afterThen(int i, String[] words, String[] added, String[] deleted)
     {
        //10 możliwości heh
     }
@@ -310,7 +357,7 @@ public class Model {
                 break;
             }
             default:
-                errors.add("Unrecognized element in the conditional statement in requirements ");
+                errors.add("\n Unrecognized element in the conditional statement in requirements ");
                 //throw new IllegalStateException("Unexpected value: " + words[1]);
                 return;
         }
@@ -324,11 +371,13 @@ public class Model {
         }
         if(i== words.length)
         {
-            errors.add("Missing \"then\" in the conditional statement in requirements ");
+            errors.add("\n Missing \"then\" in the conditional statement in requirements ");
         }
         else
         {
-            afterThen(i, words);
+            String[] add = readFromFile("diffAdd.txt");
+            String[] sub = readFromFile("diffSub.txt");
+            afterThen(i, words, add, sub);
         }
     }
 
@@ -367,7 +416,11 @@ public class Model {
     {
         try {
 
-            /*URL url = new URL(address);
+            /*
+
+            old method no1
+
+            URL url = new URL(address);
 
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
@@ -402,7 +455,12 @@ public class Model {
             WebElement button = driver.findElement(By.id(id));
             button.click();
 
-            /*(new WebDriverWait(driver, Duration.ofMillis(500))).until(new ExpectedCondition<Boolean>() {
+            /*
+
+
+            old method no2
+
+            (new WebDriverWait(driver, Duration.ofMillis(500))).until(new ExpectedCondition<Boolean>() {
                 public Boolean apply(WebDriver d) {
                     return d.getCurrentUrl().contains("some_string_that_appears_after_clicking_the_button");
                 }
@@ -614,9 +672,11 @@ public class Model {
         }
 
         BufferedWriter writer;
+        BufferedWriter writer2;
 
         try {
-             writer = new BufferedWriter(new FileWriter("diff.txt"));
+             writer = new BufferedWriter(new FileWriter("diffAdd.txt"));
+             writer2 = new BufferedWriter(new FileWriter("diffSub.txt"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -625,10 +685,12 @@ public class Model {
         {
             if(!longText[i].equalsIgnoreCase(shortText[i]))
             {
-                String line = text2[i];
+
                 try {
-                    writer.write(line);
+                    writer.write(text2[i]);
                     writer.write("\n");
+                    writer2.write(text1[i]);
+                    writer2.write("\n");
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -646,12 +708,25 @@ public class Model {
                             }
                         }
                     }
+                    else if(Arrays.equals(text1, longText))
+                    {
+                        for(int j=1; j<lengthDif; j++)
+                        {
+                            try {
+                                writer2.write(text1[i+j]);
+                                writer2.write("\n");
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                    }
                     break;
                 }
             }
         }
         try {
             writer.close();
+            writer2.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
