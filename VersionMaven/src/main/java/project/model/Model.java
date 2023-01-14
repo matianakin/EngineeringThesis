@@ -212,7 +212,6 @@ public class Model {
         }
     }
 
-
     /**
      * Swap words.
      */
@@ -261,7 +260,6 @@ public class Model {
         {
             errors.add("\n"+"Wrong number of occurrences of "+search+", supposed to be "+number+", is "+count);
         }
-
     }
 
     boolean styleChanged(String id, String[] added, String[] deleted)
@@ -434,7 +432,71 @@ public class Model {
 
     private void afterThen(int i, String[] words, String[] added, String[] deleted)
     {
-       //10 możliwości heh
+       switch (words [i+2])
+       {
+           case "appear":
+           {
+               if(!isAdded(words[i+1], added, deleted))
+               {
+                   errors.add("\n The condition "+ Arrays.toString(words) + " is not satisfied");
+               }
+               break;
+           }
+           case "disappear":
+           {
+               if(!isDeleted(words[i+1], added, deleted))
+               {
+                   errors.add("\n The condition "+ Arrays.toString(words) + " is not satisfied");
+               }
+               break;
+           }
+           case "change":
+           {
+               if(styleChanged(words[i+1], added, deleted))
+               {
+                   errors.add("\n The condition "+ Arrays.toString(words) + " is not satisfied");
+               }
+               break;
+           }
+           default:
+               switch (words[i+3])
+               {
+                   case "appear":
+                   {
+                       if(!isAdded(words[i+1], words[i+2], added, deleted))
+                       {
+                           errors.add("\n The condition "+ Arrays.toString(words) + " is not satisfied");
+                       }
+                       break;
+                   }
+                   case "disappear":
+                   {
+                       if(!isDeleted(words[i+1], words[i+2], added, deleted))
+                       {
+                           errors.add("\n The condition "+ Arrays.toString(words) + " is not satisfied");
+                       }
+                       break;
+                   }
+                   case "disabled":
+                   {
+                       if(!isDisabled(words[i+1], added, deleted))
+                       {
+                           errors.add("\n The condition "+ Arrays.toString(words) + " is not satisfied");
+                       }
+                       break;
+                   }
+                   case "enabled":
+                   {
+                       if(!isEnabled(words[i+1], added, deleted))
+                       {
+                           errors.add("\n The condition "+ Arrays.toString(words) + " is not satisfied");
+                       }
+                       break;
+                   }
+                   default:
+                       errors.add("\n Conditional part after \"then\" not recognized");
+               }
+       }
 
     }
     
