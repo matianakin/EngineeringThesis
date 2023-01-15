@@ -1,0 +1,6 @@
+14 anchors
+5 list items
+if button btnDypl clicked then btnDypl changes style
+if button btnDypl clicked then btnMaloForm disappears
+if button btnDypl clicked then table changes values
+if button btnDypl clicked then table appears
