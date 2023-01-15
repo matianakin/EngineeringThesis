@@ -108,7 +108,7 @@ public class Model {
                 xhtml.append(line);
             }*/
 
-            System.setProperty("webdriver.chrome.driver", "C:\\chromedriver_win32\\chromedriver.exe");
+            //System.setProperty("webdriver.chrome.driver", "C:\\chromedriver_win32\\chromedriver.exe");
 
             ChromeOptions options = new ChromeOptions();
             options.setHeadless(true);
