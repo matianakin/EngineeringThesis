@@ -1,3 +1,0 @@
-9 anchors
-5 list items
-if button btnDypl then btnDypl changes style

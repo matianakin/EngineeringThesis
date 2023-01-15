@@ -734,9 +734,9 @@ public class Model {
                 int number = req.charAt(0) - 48;
                 int j = 1;
                 while (req.charAt(j) >= 48 && req.charAt(j) <= 57) {
-                    j++;
                     number *= 10;
                     number += req.charAt(j) - 48;
+                    j++;
                 }
 
                 String toAnalyze = req.substring(j + 1);
