@@ -288,19 +288,19 @@ public class Model {
         String class1="";
         String class2="";
 
-        for(String word: wordsBeg)
+        for(int i=0; i<wordsBeg.length; i++)
         {
-            if(word.contains("class"))
+            if(wordsBeg[i].contains("class"))
             {
-                class1=word;
+                class1=wordsBeg[i+1];
                 break;
             }
         }
-        for (String word:wordsEnd)
+        for(int i=0; i<wordsEnd.length; i++)
         {
-            if(word.contains("class"))
+            if(wordsEnd[i].contains("class"))
             {
-                class2=word;
+                class2=wordsEnd[i+1];
                 break;
             }
         }
@@ -334,19 +334,19 @@ public class Model {
         String value1="";
         String value2="";
 
-        for(String word: wordsBeg)
+        for(int i=0; i<wordsBeg.length; i++)
         {
-            if(word.contains("value"))
+            if(wordsBeg[i].contains("value"))
             {
-                value1=word;
+                value1=wordsBeg[i+1];
                 break;
             }
         }
-        for (String word:wordsEnd)
+        for(int i=0; i<wordsEnd.length; i++)
         {
-            if(word.contains("value"))
+            if(wordsEnd[i].contains("value"))
             {
-                value2=word;
+                value2=wordsEnd[i+1];
                 break;
             }
         }
@@ -374,30 +374,68 @@ public class Model {
                 break;
             }
         }
-        String[] wordsBeg = styleBeg.split("\\s+");
-        String[] wordsEnd = styleEnd.split("\\s+");
+        String[] wordsBeg = styleBeg.split("\"");
+        String[] wordsEnd = styleEnd.split("\"");
 
         String style1="";
         String style2="";
 
-        for(String word: wordsBeg)
+        for(int i=0; i<wordsBeg.length; i++)
         {
-            if(word.contains("style"))
+            if(wordsBeg[i].contains("style"))
             {
-                style1=word;
+                style1=wordsBeg[i+1];
                 break;
             }
         }
-        for (String word:wordsEnd)
+        for(int i=0; i<wordsEnd.length; i++)
         {
-            if(word.contains("style"))
+            if(wordsEnd[i].contains("style"))
             {
-                style2=word;
+                style2=wordsEnd[i+1];
                 break;
             }
         }
 
         return !style1.equalsIgnoreCase(style2);
+    }
+
+    private boolean isShown(String id, String[] added, String[] deleted)
+    {
+        for (String d: deleted)
+        {
+            if(d.contains(id) && d.contains("disabled"))
+            {
+                for( String s: added)
+                {
+                    if(s.contains(id))
+                    {
+                        return !s.contains("disabled");
+                    }
+                }
+                return false;
+            }
+        }
+        return false;
+    }
+
+    private boolean isHidden(String id, String[] added, String[] deleted)
+    {
+        for (String s:added)
+        {
+            if(s.contains(id) && s.contains("hidden"))
+            {
+                for(String d:deleted)
+                {
+                    if(d.contains(id))
+                    {
+                        return !d.contains("hidden");
+                    }
+                }
+                return false;
+            }
+        }
+        return false;
     }
 
     private boolean isEnabled(String id, String[] added, String[] deleted)
@@ -543,17 +581,17 @@ public class Model {
            case "change":
            {
                if(words[i+3].equalsIgnoreCase("style")) {
-                   if (styleChanged(words[i + 1], added, deleted)) {
+                   if (!styleChanged(words[i + 1], added, deleted)) {
                        errors.add("\n The condition " + Arrays.toString(words) + " is not satisfied");
                    }
                }
                else if (words[i+3].equalsIgnoreCase("value")){
-                   if (valueChanged(words[i + 1], added, deleted)) {
+                   if (!valueChanged(words[i + 1], added, deleted)) {
                        errors.add("\n The condition " + Arrays.toString(words) + " is not satisfied");
                    }
                }
                else if (words[i+3].equalsIgnoreCase("class")){
-                   if (classChanged(words[i + 1], added, deleted)) {
+                   if (!classChanged(words[i + 1], added, deleted)) {
                        errors.add("\n The condition " + Arrays.toString(words) + " is not satisfied");
                    }
                }
@@ -593,6 +631,22 @@ public class Model {
                    case "enabled":
                    {
                        if(!isEnabled(words[i+1], added, deleted))
+                       {
+                           errors.add("\n The condition "+ Arrays.toString(words) + " is not satisfied");
+                       }
+                       break;
+                   }
+                   case "hidden":
+                   {
+                       if(!isHidden(words[i+1], added, deleted))
+                       {
+                           errors.add("\n The condition "+ Arrays.toString(words) + " is not satisfied");
+                       }
+                       break;
+                   }
+                   case "shown":
+                   {
+                       if(!isShown(words[i+1], added, deleted))
                        {
                            errors.add("\n The condition "+ Arrays.toString(words) + " is not satisfied");
                        }
