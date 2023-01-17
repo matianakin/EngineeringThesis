@@ -95,7 +95,7 @@ public class Model {
     /**
      * Get xhtml.
      */
-    public void GetXHTML () {
+    public void getXHTML() {
         try {
             /*
             URL url = new URL(address);
@@ -236,7 +236,7 @@ public class Model {
      * @param search the search
      * @param number the number
      */
-    public void counter(String search, int number)
+    private void counter(String search, int number)
     {
         String toSearch1 = "<"+search+" ";
         String toSearch2 = "<"+search+">";
@@ -748,7 +748,7 @@ public class Model {
      *
      * @param id the id
      */
-    public void buttonSimulator(String id)
+    private void buttonSimulator(String id)
     {
         try {
 
@@ -823,7 +823,7 @@ public class Model {
      * @param inputName  the input name
      * @param inputValue the input value
      */
-    public void inputFieldSimulator(String inputName, String inputValue) {
+    private void inputFieldSimulator(String inputName, String inputValue) {
         try {
             ChromeOptions options = new ChromeOptions();
             options.setHeadless(true);
@@ -854,7 +854,7 @@ public class Model {
      * @param radioButtonName  the radio button name
      * @param radioButtonValue the radio button value
      */
-    public void radioButtonSimulator(String radioButtonName, String radioButtonValue) {
+    private void radioButtonSimulator(String radioButtonName, String radioButtonValue) {
         try {
             ChromeOptions options = new ChromeOptions();
             options.setHeadless(true);
@@ -886,7 +886,7 @@ public class Model {
      *
      * @param checkboxId the checkbox id
      */
-    public void checkboxSimulator(String checkboxId) {
+    private void checkboxSimulator(String checkboxId) {
         try {
             ChromeOptions options = new ChromeOptions();
             options.setHeadless(true);
@@ -915,7 +915,7 @@ public class Model {
      * @param dropdownId  the dropdown id
      * @param optionValue the option value
      */
-    public void dropdownSimulator(String dropdownId, String optionValue) {
+    private void dropdownSimulator(String dropdownId, String optionValue) {
         try {
             ChromeOptions options = new ChromeOptions();
             options.setHeadless(true);
@@ -950,7 +950,7 @@ public class Model {
      * @param inputName  the input name
      * @param inputValue the input value
      */
-    public void formInputSimulator(String formId, String inputName, String inputValue) {
+    private void formInputSimulator(String formId, String inputName, String inputValue) {
         try {
             ChromeOptions options = new ChromeOptions();
             options.setHeadless(true);
@@ -984,7 +984,7 @@ public class Model {
      * @param filePath the file path
      * @return the string [ ]
      */
-    public String[] readLinesFromFile(String filePath) {
+    private String[] readLinesFromFile(String filePath) {
         ArrayList<String> lines = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
@@ -1003,7 +1003,7 @@ public class Model {
      * @param text1 the text 1
      * @param text2 the text 2
      */
-    public  void compare(String[] text1, String[] text2)  {
+    private void compare(String[] text1, String[] text2)  {
         int lengthDif = Math.abs(text1.length- text2.length);
         int shortLength;
         var longText = text1;
@@ -1116,14 +1116,6 @@ public class Model {
         this.reqs = reqs;
     }
 
-    /**
-     * Gets xhtml.
-     *
-     * @return the xhtml
-     */
-    public String getXHTML() {
-        return XHTML;
-    }
 
     /**
      * Gets errors.

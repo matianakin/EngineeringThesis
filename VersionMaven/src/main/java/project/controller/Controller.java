@@ -20,7 +20,7 @@ public class Controller {
     public Controller() {
         this.model = new Model();
         this.view = new View();
-        view.startingWindow();
+
         this.controller();
     }
 
@@ -28,11 +28,12 @@ public class Controller {
      * Controller.
      */
     private void controller() {
+        view.startingWindow();
         model.readDictionary();
         view.buttonProceedClicked();
         view.cleanText();
         model.setAddress(view.getURL());
-        model.GetXHTML();
+        model.getXHTML();
         model.setTxtPath(view.getFilePath());
         model.setReqs(model.readFromFile(model.getTxtPath()));
         model.removeS();
