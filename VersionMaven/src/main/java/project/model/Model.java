@@ -402,15 +402,17 @@ public class Model {
 
     private boolean isShown(String id, String[] added, String[] deleted)
     {
-        for (String d: deleted)
+        for (String d:deleted)
         {
-            if(d.contains(id) && d.contains("disabled"))
+            var newD = d.replaceAll("\\s", "");
+            if(newD.contains(id) && newD.contains("hidden") && !newD.contains("hidden=false"))
             {
-                for( String s: added)
+                for (String s:added)
                 {
-                    if(s.contains(id))
+                    var newS = s.replaceAll("\\s", "");
+                    if(newS.contains(id))
                     {
-                        return !s.contains("disabled");
+                        return (!newS.contains("hidden") ||  newS.contains("hidden=false"));
                     }
                 }
                 return false;
@@ -423,13 +425,15 @@ public class Model {
     {
         for (String s:added)
         {
-            if(s.contains(id) && s.contains("hidden"))
+            var newS = s.replaceAll("\\s", "");
+            if(newS.contains(id) && newS.contains("hidden") && !newS.contains("hidden=false"))
             {
                 for(String d:deleted)
                 {
-                    if(d.contains(id))
+                    var newD = d.replaceAll("\\s", "");
+                    if(newD.contains(id))
                     {
-                        return !d.contains("hidden");
+                        return (!newD.contains("hidden") ||  newD.contains("hidden=false"));
                     }
                 }
                 return false;
@@ -440,15 +444,17 @@ public class Model {
 
     private boolean isEnabled(String id, String[] added, String[] deleted)
     {
-        for (String d: deleted)
+        for (String d:deleted)
         {
-            if(d.contains(id) && d.contains("disabled"))
+            var newD = d.replaceAll("\\s", "");
+            if(newD.contains(id) && newD.contains("disabled") && !newD.contains("disabled=false"))
             {
-                for( String s: added)
+                for (String s:added)
                 {
-                    if(s.contains(id))
+                    var newS = s.replaceAll("\\s", "");
+                    if(newS.contains(id))
                     {
-                        return !s.contains("disabled");
+                        return (!newS.contains("disabled") ||  newS.contains("disabled=false"));
                     }
                 }
                 return false;
@@ -461,13 +467,15 @@ public class Model {
     {
         for (String s:added)
         {
-            if(s.contains(id) && s.contains("disabled"))
+            var newS = s.replaceAll("\\s", "");
+            if(newS.contains(id) && newS.contains("disabled") && !newS.contains("disabled=false"))
             {
                 for(String d:deleted)
                 {
-                    if(d.contains(id))
+                    var newD = d.replaceAll("\\s", "");
+                    if(newD.contains(id))
                     {
-                        return !d.contains("disabled");
+                        return (!newD.contains("disabled") ||  newD.contains("disabled=false"));
                     }
                 }
                 return false;
