@@ -53,9 +53,9 @@ public class Model {
         String[] ret = null;
         try {
             ret = readFromInputStream(new FileInputStream(path)).split("\n");
-            for (int i = 0; i < ret.length; i++) {
+            /*for (int i = 0; i < ret.length; i++) {
                 ret[i] = ret[i].toLowerCase();
-            }
+            }*/
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -839,7 +839,7 @@ public class Model {
 
             driver.get(address);
 
-            WebElement input = driver.findElement(By.name(inputName));
+            WebElement input = driver.findElement(By.id(inputName));
             input.sendKeys(inputValue);
 
             Thread.sleep(1000);
@@ -860,9 +860,9 @@ public class Model {
      * Radio button simulator.
      *
      * @param radioButtonName  the radio button name
-     * @param radioButtonValue the radio button value
+     * @param radioButtonId the radio button value
      */
-    private void radioButtonSimulator(String radioButtonName, String radioButtonValue) {
+    private void radioButtonSimulator(String radioButtonName, String radioButtonId) {
         try {
             ChromeOptions options = new ChromeOptions();
             options.setHeadless(true);
@@ -870,7 +870,7 @@ public class Model {
 
             driver.get(address);
 
-            WebElement radioButton = driver.findElement(By.cssSelector("input[name='" + radioButtonName + "'][value='" + radioButtonValue + "']"));
+            WebElement radioButton = driver.findElement(By.id(radioButtonId));
 
             if (!radioButton.isSelected()) {
                 radioButton.click();

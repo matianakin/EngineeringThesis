@@ -126,9 +126,6 @@ public class View extends JFrame {
      */
     private void buttonFileActionPerformed(ActionEvent e) {
         fileChooser.setFileFilter(new FileNameExtensionFilter("Text files", "txt"));
-        /**
-         * The File selector result.
-         */
         int fileSelectorResult = fileChooser.showOpenDialog(null);
         if (fileSelectorResult == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fileChooser.getSelectedFile();
