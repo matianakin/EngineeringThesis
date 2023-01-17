@@ -17,7 +17,7 @@ public class Controller {
     /**
      * Instantiates a new Controller.
      */
-    Controller() {
+    public Controller() {
         this.model = new Model();
         this.view = new View();
         view.startingWindow();

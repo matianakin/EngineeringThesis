@@ -1,12 +1,13 @@
 package project.view;
+
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.text.NumberFormatter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.text.NumberFormat;
-import javax.swing.*;
-import javax.swing.border.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.text.NumberFormatter;
 
 
 /**
@@ -43,7 +44,10 @@ public class View extends JFrame {
      */
     private void initComponents() {
         dialogPane = new JPanel();
-        contentPanel = new JPanel();
+        /**
+         * Container in the window
+         */
+        JPanel contentPanel = new JPanel();
         textFieldURL = new JTextField();
         fileChooser = new JFileChooser();
         textFieldURL.setText("Enter URL here");
@@ -61,8 +65,8 @@ public class View extends JFrame {
         textResult.setDisabledTextColor(Color.black);/*
         emptyLabelSE = new JLabel();*/
         buttonProceed = new JButton();
-        buttonFile = new JButton();
-        scrollPane = new JScrollPane(textResult);
+        JButton buttonFile = new JButton();
+        JScrollPane scrollPane = new JScrollPane(textResult);
         setMinimumSize(new Dimension(640, 360));
         var contentPane = getContentPane();
         contentPane.setLayout(new BorderLayout());
@@ -135,7 +139,10 @@ public class View extends JFrame {
      */
     private void buttonFileActionPerformed(ActionEvent e) {
         fileChooser.setFileFilter(new FileNameExtensionFilter("Text files", "txt"));
-        fileSelectorResult = fileChooser.showOpenDialog(null);
+        /**
+         * The File selector result.
+         */
+        int fileSelectorResult = fileChooser.showOpenDialog(null);
         if (fileSelectorResult == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fileChooser.getSelectedFile();
             setFilePath(selectedFile.getAbsolutePath());
@@ -166,11 +173,6 @@ public class View extends JFrame {
      */
     private JPanel dialogPane;
 
-    /**
-     * Container in the window
-     */
-    private JPanel contentPanel;
-
 
     /**
      * The Text field url.
@@ -190,24 +192,9 @@ public class View extends JFrame {
     private JButton buttonProceed;
 
     /**
-     * The Button file.
-     */
-    private JButton buttonFile;
-
-    /**
-     * The Scroll pane.
-     */
-    private JScrollPane scrollPane;
-
-    /**
      * The File chooser.
      */
     private JFileChooser fileChooser;
-
-    /**
-     * The File selector result.
-     */
-    private int fileSelectorResult;
 
     /**
      * The File path.
