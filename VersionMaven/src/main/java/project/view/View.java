@@ -31,7 +31,7 @@ public class View extends JFrame {
      * Starting window.
      */
     public void startingWindow() {
-        frame = new JFrame("EngThes");
+        frame = new JFrame("EngineeringProject");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(dialogPane);
         frame.pack();
@@ -44,9 +44,6 @@ public class View extends JFrame {
      */
     private void initComponents() {
         dialogPane = new JPanel();
-        /**
-         * Container in the window
-         */
         JPanel contentPanel = new JPanel();
         textFieldURL = new JTextField();
         fileChooser = new JFileChooser();
