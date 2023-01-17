@@ -602,58 +602,51 @@ public class Model {
                break;
            }
            default:
-               switch (words[i+3])
+               if(i+3< words.length) {
+                   switch (words[i + 3]) {
+                       case "appear": {
+                           if (!isAdded(words[i + 1], words[i + 2], added, deleted)) {
+                               errors.add("\n The condition " + Arrays.toString(words) + " is not satisfied");
+                           }
+                           break;
+                       }
+                       case "disappear": {
+                           if (!isDeleted(words[i + 1], words[i + 2], added, deleted)) {
+                               errors.add("\n The condition " + Arrays.toString(words) + " is not satisfied");
+                           }
+                           break;
+                       }
+                       case "disabled": {
+                           if (!isDisabled(words[i + 1], added, deleted)) {
+                               errors.add("\n The condition " + Arrays.toString(words) + " is not satisfied");
+                           }
+                           break;
+                       }
+                       case "enabled": {
+                           if (!isEnabled(words[i + 1], added, deleted)) {
+                               errors.add("\n The condition " + Arrays.toString(words) + " is not satisfied");
+                           }
+                           break;
+                       }
+                       case "hidden": {
+                           if (!isHidden(words[i + 1], added, deleted)) {
+                               errors.add("\n The condition " + Arrays.toString(words) + " is not satisfied");
+                           }
+                           break;
+                       }
+                       case "shown": {
+                           if (!isShown(words[i + 1], added, deleted)) {
+                               errors.add("\n The condition " + Arrays.toString(words) + " is not satisfied");
+                           }
+                           break;
+                       }
+                       default:
+                           errors.add("\n Conditional part after \"then\" not recognized");
+                   }
+               }
+               else
                {
-                   case "appear":
-                   {
-                       if(!isAdded(words[i+1], words[i+2], added, deleted))
-                       {
-                           errors.add("\n The condition "+ Arrays.toString(words) + " is not satisfied");
-                       }
-                       break;
-                   }
-                   case "disappear":
-                   {
-                       if(!isDeleted(words[i+1], words[i+2], added, deleted))
-                       {
-                           errors.add("\n The condition "+ Arrays.toString(words) + " is not satisfied");
-                       }
-                       break;
-                   }
-                   case "disabled":
-                   {
-                       if(!isDisabled(words[i+1], added, deleted))
-                       {
-                           errors.add("\n The condition "+ Arrays.toString(words) + " is not satisfied");
-                       }
-                       break;
-                   }
-                   case "enabled":
-                   {
-                       if(!isEnabled(words[i+1], added, deleted))
-                       {
-                           errors.add("\n The condition "+ Arrays.toString(words) + " is not satisfied");
-                       }
-                       break;
-                   }
-                   case "hidden":
-                   {
-                       if(!isHidden(words[i+1], added, deleted))
-                       {
-                           errors.add("\n The condition "+ Arrays.toString(words) + " is not satisfied");
-                       }
-                       break;
-                   }
-                   case "shown":
-                   {
-                       if(!isShown(words[i+1], added, deleted))
-                       {
-                           errors.add("\n The condition "+ Arrays.toString(words) + " is not satisfied");
-                       }
-                       break;
-                   }
-                   default:
-                       errors.add("\n Conditional part after \"then\" not recognized");
+                   errors.add("\n Conditional part after \"then\" not recognized");
                }
        }
 
