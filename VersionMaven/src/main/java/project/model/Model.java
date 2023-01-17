@@ -841,6 +841,8 @@ public class Model {
             WebElement input = driver.findElement(By.name(inputName));
             input.sendKeys(inputValue);
 
+            Thread.sleep(1000);
+
             String response = driver.getPageSource();
 
             PrintWriter writer = new PrintWriter("xhtmlAfter.txt", StandardCharsets.UTF_8);
@@ -872,6 +874,9 @@ public class Model {
             if (!radioButton.isSelected()) {
                 radioButton.click();
             }
+
+            Thread.sleep(1000);
+
             String response = driver.getPageSource();
             PrintWriter writer = new PrintWriter("xhtmlAfter.txt", StandardCharsets.UTF_8);
             writer.println(response);
@@ -898,6 +903,9 @@ public class Model {
             if (!checkbox.isSelected()) {
                 checkbox.click();
             }
+
+            Thread.sleep(1000);
+
             String response = driver.getPageSource();
             PrintWriter writer = new PrintWriter("xhtmlAfter.txt", StandardCharsets.UTF_8);
             writer.println(response);
@@ -926,6 +934,8 @@ public class Model {
 
             Select select = new Select(dropdown);
             select.selectByValue(optionValue);
+
+            Thread.sleep(1000);
 
             String response = driver.getPageSource();
 
@@ -960,6 +970,8 @@ public class Model {
             input.sendKeys(inputValue);
 
             form.submit();
+
+            Thread.sleep(1000);
 
             String response = driver.getPageSource();
 
