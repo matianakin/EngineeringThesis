@@ -3,11 +3,9 @@ package project.view;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.text.NumberFormatter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.File;
-import java.text.NumberFormat;
 
 
 /**
@@ -48,19 +46,11 @@ public class View extends JFrame {
         textFieldURL = new JTextField();
         fileChooser = new JFileChooser();
         textFieldURL.setText("Enter URL here");
-        NumberFormat format = NumberFormat.getInstance();
-        NumberFormatter formatter = new NumberFormatter(format);
-        formatter.setValueClass(Integer.class);
-        formatter.setMinimum(Integer.MIN_VALUE);
-        formatter.setMaximum(Integer.MAX_VALUE);
-        formatter.setAllowsInvalid(false);/*
-        emptyLabelSW = new JLabel();*/
         textResult = new JTextArea();
         textResult.setLineWrap(true);
         textResult.setWrapStyleWord(true);
         textResult.setEnabled(false);
-        textResult.setDisabledTextColor(Color.black);/*
-        emptyLabelSE = new JLabel();*/
+        textResult.setDisabledTextColor(Color.black);
         buttonProceed = new JButton();
         JButton buttonFile = new JButton();
         JScrollPane scrollPane = new JScrollPane(textResult);
