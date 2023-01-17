@@ -3,17 +3,17 @@
     </script>
   </head>
   <body>
-    <input id="inputText" onkeyup="copyText()">
+    <input id="inputText" oninput="copyText()">
     <br>
     <input readonly="" id="outputText">
     <br><br><br>
-    <button id="thisFirst" onclick="enableButton()">This First</button>
-      <button id="notYet" disabled="" onclick="newStyle()">Not Yet</button>
+    <button id="thisFirst" onclick="enableButton()" style="background-color: white;">This First</button>
+    <button id="notYet" disabled="" onclick="newStyle()" style="background-color: white;">Not Yet</button>
     <br><br><br>
-    <form>
-      <input type="radio" id="radio1" name="radios" onchange="radioChange()">Show image<br>
-      <input type="radio" id="radio2" name="radios" onchange="radioChange()">Change button color<br>
-      <input type="radio" id="radio3" name="radios" onchange="radioChange()">Hide input<br>
+    <form id="radio">
+      <input type="radio" id="radio1" name="radio" onchange="radioChange()">Show image<br>
+      <input type="radio" id="radio2" name="radio" onchange="radioChange()">Change button color<br>
+      <input type="radio" id="radio3" name="radio" onchange="radioChange()">Hide input<br>
     </form>
     <br><br><br>
     <select id="dropdown" onchange="changeClass()">

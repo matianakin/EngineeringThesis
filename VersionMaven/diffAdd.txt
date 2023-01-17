@@ -1,2 +1,1 @@
-  <body wfd-invisible="true">
-    <input id="inputText" onkeyup="copyText()" hidden="">
+    <select id="dropdown" onchange="changeClass()" class="option2">

@@ -282,8 +282,8 @@ public class Model {
                 break;
             }
         }
-        String[] wordsBeg = classBeg.split("\\s+");
-        String[] wordsEnd = classEnd.split("\\s+");
+        String[] wordsBeg = classBeg.split("\"");
+        String[] wordsEnd = classEnd.split("\"");
 
         String class1="";
         String class2="";
@@ -328,8 +328,8 @@ public class Model {
                 break;
             }
         }
-        String[] wordsBeg = valueBeg.split("\\s+");
-        String[] wordsEnd = valueEnd.split("\\s+");
+        String[] wordsBeg = valueBeg.split("\"");
+        String[] wordsEnd = valueEnd.split("\"");
 
         String value1="";
         String value2="";
@@ -598,7 +598,7 @@ public class Model {
                        errors.add("\n The condition " + Arrays.toString(words) + " is not satisfied");
                    }
                }
-               else if (words[i+3].equalsIgnoreCase("class")){
+               else if (words[i+3].equalsIgnoreCase("clas")){
                    if (!classChanged(words[i + 1], added, deleted)) {
                        errors.add("\n The condition " + Arrays.toString(words) + " is not satisfied");
                    }
@@ -940,7 +940,7 @@ public class Model {
 
             String response = driver.getPageSource();
 
-            PrintWriter writer = new PrintWriter("xhtmlAfter", StandardCharsets.UTF_8);
+            PrintWriter writer = new PrintWriter("xhtmlAfter.txt", StandardCharsets.UTF_8);
             writer.println(response);
             writer.close();
 
@@ -958,7 +958,7 @@ public class Model {
      * @param inputName  the input name
      * @param inputValue the input value
      */
-    private void formInputSimulator(String formId, String inputName, String inputValue) {
+    private void formInputSimulator(String inputName, String formId, String inputValue) {
         try {
             ChromeOptions options = new ChromeOptions();
             options.setHeadless(true);
@@ -1039,7 +1039,7 @@ public class Model {
 
         for(int i=0; i<shortLength; i++)
         {
-            if(!longText[i].equalsIgnoreCase(shortText[i]))
+            if(!longText[i].equalsIgnoreCase(shortText[i])&&(!longText[i].contains("<body>")&&!shortText[i].contains("<body>")))
             {
 
                 try {

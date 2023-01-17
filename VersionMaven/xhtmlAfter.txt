@@ -2,21 +2,21 @@
     <script type="text/javascript" src="test.js">
     </script>
   </head>
-  <body wfd-invisible="true">
-    <input id="inputText" onkeyup="copyText()" hidden="">
+  <body>
+    <input id="inputText" oninput="copyText()">
     <br>
     <input readonly="" id="outputText">
     <br><br><br>
-    <button id="thisFirst" onclick="enableButton()">This First</button>
-      <button id="notYet" disabled="" onclick="newStyle()" style="background-color: white;">Not Yet</button>
+    <button id="thisFirst" onclick="enableButton()" style="background-color: white;">This First</button>
+    <button id="notYet" disabled="" onclick="newStyle()" style="background-color: white;">Not Yet</button>
     <br><br><br>
-    <form>
-      <input type="radio" id="radio1" name="radios" onchange="radioChange()">Show image<br>
-      <input type="radio" id="radio2" name="radios" onchange="radioChange()">Change button color<br>
-      <input type="radio" id="radio3" name="radios" onchange="radioChange()">Hide input<br>
+    <form id="radio">
+      <input type="radio" id="radio1" name="radio" onchange="radioChange()">Show image<br>
+      <input type="radio" id="radio2" name="radio" onchange="radioChange()">Change button color<br>
+      <input type="radio" id="radio3" name="radio" onchange="radioChange()">Hide input<br>
     </form>
     <br><br><br>
-    <select id="dropdown" onchange="changeClass()">
+    <select id="dropdown" onchange="changeClass()" class="option2">
       <option value="option1">Option 1</option>
       <option value="option2">Option 2</option>
       <option value="option3">Option 3</option>
@@ -24,7 +24,7 @@
     <br><br><br>
     <input type="checkbox" id="myCheck" onclick="updateTable()"> Check me
     <br><br>
-    <table id="myTable" hidden="true" wfd-invisible="true">
+    <table id="myTable" hidden="true">
       <tbody><tr>
         <th>I am visibly checked</th>
       </tr>
