@@ -1,1 +1,54 @@
-    <table id="myTable">
+          <button id="btnMaloForm" style="background-color: rgb(0, 2, 39); color: white;">wydruki małoformatowe</button>
+          <button id="btnDypl" style="background-color: white; color: rgb(0, 2, 39);">inne</button>
+
+<h2>Laminowanie</h2><table class="tg">
+  
+<tbody><tr>
+  <td class="double">A4
+  </td><td class="double">3,00 zł
+</td></tr>
+
+<tr>
+  <td class="double">A3</td>
+  <td class="double">6,00 zł</td>
+</tr>
+
+
+</tbody></table>
+
+
+
+
+<h2>Skanowanie</h2><table class="tg">
+  
+<tbody><tr>
+  <td class="double">Skanowanie ręczne
+  </td><td class="double">0,80 zł *
+</td></tr>
+
+<tr>
+  <td class="double">Skanowanie automatyczne</td>
+  <td class="double">0,40 zł *</td>
+</tr>
+
+
+</tbody></table>
+<h2>Dodatkowo</h2><table class="tg">
+  
+<tbody><tr>
+  <td class="double">Zapis z CAD
+  </td><td class="double">1,50 zł
+</td></tr>
+
+<tr>
+  <td class="double">Edycja tekst/rysunek</td>
+  <td class="double">2,00 zł</td>
+</tr>
+
+<tr>
+  <td class="double">Nagranie CD</td>
+  <td class="double">2,00 zł</td>
+</tr>
+
+
+</tbody></table><h5>* - cena podlega negocjacji</h5></div>

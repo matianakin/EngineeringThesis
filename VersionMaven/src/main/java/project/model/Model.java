@@ -731,22 +731,26 @@ public class Model {
     public void iterateReqs()
     {
         for (String req : reqs) {
-            if (req.charAt(0) >= 48 && req.charAt(0) <= 57) {
-                int number = req.charAt(0) - 48;
-                int j = 1;
-                while (req.charAt(j) >= 48 && req.charAt(j) <= 57) {
-                    number *= 10;
-                    number += req.charAt(j) - 48;
-                    j++;
+            if(!req.isEmpty()) {
+                if (req.charAt(0) >= 48 && req.charAt(0) <= 57) {
+                    int number = req.charAt(0) - 48;
+                    int j = 1;
+                    while (req.charAt(j) >= 48 && req.charAt(j) <= 57) {
+                        number *= 10;
+                        number += req.charAt(j) - 48;
+                        j++;
+                    }
+
+                    String toAnalyze = req.substring(j + 1);
+
+                    counter(toAnalyze, number);
+                } else if ((req.charAt(0) == 'i' || req.charAt(0) == 'I') && ((req.charAt(1) == 'f' || req.charAt(1) == 'F'))) {
+                    analyzeCondition(req);
                 }
-
-                String toAnalyze = req.substring(j + 1);
-
-                counter(toAnalyze, number);
             }
-            else if ((req.charAt(0) == 'i' || req.charAt(0)=='I')&&((req.charAt(1) == 'f' || req.charAt(1)=='F')))
+            else
             {
-                analyzeCondition(req);
+                errors.add("\n Requirement is empty");
             }
         }
     }

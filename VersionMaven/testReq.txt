@@ -1,12 +1,17 @@
 if input inputText has value then butVal changes value
 if button thisFirst clicked then notYet becomes enabled
 if radio button radios has radio1 clicked then image img appears
+if radio button radios has radio1 clicked then image appears
 if radio button radios has radio2 clicked then notYet changes style
 if radio button radios has radio3 clicked then inputText becomes hidden
 if dropdown menu dropdown chosen option2 then dropdown changes class
 if checkbox myCheck checked then myTable is shown
 if input input in form thisForm has thisValue then input2 becomes disabled
+if button butVal clicked then button thisFirst disappears
+if button butVal clicked then button disappears
+if input inputText has value then button disappears
 1 head
 1 body
 2 forms
 4 buttons
+15 buttons
