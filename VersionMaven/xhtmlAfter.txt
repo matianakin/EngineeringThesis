@@ -3,7 +3,8 @@
     </script>
   </head>
   <body>
-    <input id="inputText" oninput="copyText()">
+    <input id="inputText" onkeyup="copyText()">
+    <button id="butVal" value=""></button>
     <br>
     <input readonly="" id="outputText">
     <br><br><br>
@@ -16,7 +17,7 @@
       <input type="radio" id="radio3" name="radio" onchange="radioChange()">Hide input<br>
     </form>
     <br><br><br>
-    <select id="dropdown" onchange="changeClass()" class="option2">
+    <select id="dropdown" onchange="changeClass()">
       <option value="option1">Option 1</option>
       <option value="option2">Option 2</option>
       <option value="option3">Option 3</option>
@@ -24,7 +25,7 @@
     <br><br><br>
     <input type="checkbox" id="myCheck" onclick="updateTable()"> Check me
     <br><br>
-    <table id="myTable" hidden="true">
+    <table id="myTable">
       <tbody><tr>
         <th>I am visibly checked</th>
       </tr>
@@ -33,7 +34,7 @@
       </tr>
     </tbody></table>
     <br><br><br>
-    <form id="thisForm">
+    <form id="thisForm" onsubmit="displayText()">
       <label for="input">Enter some text:</label>
       <input type="text" id="input" name="input">
       <button type="button" onclick="displayText()">Submit</button>

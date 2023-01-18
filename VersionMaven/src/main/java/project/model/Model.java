@@ -970,7 +970,12 @@ public class Model {
             WebElement input = form.findElement(By.name(inputName));
             input.sendKeys(inputValue);
 
-            form.submit();
+            List<WebElement> buttons = form.findElements(By.tagName("button"));
+            if (buttons.size() > 0) {
+                buttons.get(0).click();
+            } else {
+                form.submit();
+            }
 
             Thread.sleep(1000);
 
@@ -1039,7 +1044,7 @@ public class Model {
 
         for(int i=0; i<shortLength; i++)
         {
-            if(!longText[i].equalsIgnoreCase(shortText[i])&&(!longText[i].contains("<body>")&&!shortText[i].contains("<body>")))
+            if(!longText[i].equalsIgnoreCase(shortText[i]))
             {
 
                 try {

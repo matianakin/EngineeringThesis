@@ -3,7 +3,8 @@
     </script>
   </head>
   <body>
-    <input id="inputText" oninput="copyText()">
+    <input id="inputText" onkeyup="copyText()">
+    <button id="butVal" value=""></button>
     <br>
     <input readonly="" id="outputText">
     <br><br><br>
@@ -33,7 +34,7 @@
       </tr>
     </tbody></table>
     <br><br><br>
-    <form id="thisForm">
+    <form id="thisForm" onsubmit="displayText()">
       <label for="input">Enter some text:</label>
       <input type="text" id="input" name="input">
       <button type="button" onclick="displayText()">Submit</button>
